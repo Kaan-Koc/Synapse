@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MetaMind™ — Your Past Is Your Most Secure Future | Synapse Corp.</title>
+  <meta name="description" content="MetaMind by Synapse. Relive your happiest memories. Forever."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --purple:#4D2461;--purple-light:#6B3585;--purple-pale:#f3eef7;
+      --yellow:#F9E92D;--white:#FAFAFA;--off-white:#F5F3F8;
+      --gray:#9E9BAE;--dark:#1A0E24;--font:'Poppins',sans-serif;
+      --tdm:background .45s ease,color .45s ease,border-color .45s ease,box-shadow .45s ease;
+    }
+    [data-theme="dark"]{--white:#0D0714;--off-white:#130D1E;--gray:#7A778E;--dark:#F0ECF6;--purple-pale:#1E1130;}
+    [data-theme="dark"] html,[data-theme="dark"] body{background:#0D0714;color:#F0ECF6}
+    [data-theme="dark"] nav{background:rgba(13,7,20,.85)!important;border-bottom-color:rgba(77,36,97,.25);box-shadow:0 2px 24px rgba(0,0,0,.4)}
+    [data-theme="dark"] .nav-links a{color:#c9bfda}
+    [data-theme="dark"] .nav-logo{color:#c9bfda}
+    [data-theme="dark"] #hero{background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(77,36,97,.35) 0%,transparent 70%),#0D0714}
+    [data-theme="dark"] .hero-overline{background:rgba(249,233,45,.08);border-color:rgba(249,233,45,.15);color:var(--yellow)}
+    [data-theme="dark"] .btn-secondary{color:#c9bfda;border-color:rgba(201,191,218,.25)}
+    [data-theme="dark"] .btn-secondary:hover{background:rgba(201,191,218,.08)}
+    [data-theme="dark"] .hero-product{box-shadow:0 32px 96px rgba(0,0,0,.5),0 0 0 1px rgba(77,36,97,.3)}
+    [data-theme="dark"] #how{background:#130D1E;border-color:rgba(77,36,97,.18)}
+    [data-theme="dark"] .info-card{background:#1E1130;border-color:rgba(77,36,97,.25);box-shadow:0 4px 24px rgba(0,0,0,.3)}
+    [data-theme="dark"] .info-card:hover{box-shadow:0 12px 48px rgba(77,36,97,.25)}
+    [data-theme="dark"] .how-step-content h4,[data-theme="dark"] .section-title{color:#F0ECF6}
+    [data-theme="dark"] #usecases{background:#0D0714}
+    [data-theme="dark"] .use-card{background:#130D1E;border-color:rgba(77,36,97,.2)}
+    [data-theme="dark"] .use-card:hover{box-shadow:0 20px 64px rgba(0,0,0,.4)}
+    [data-theme="dark"] .use-card-tag{background:rgba(77,36,97,.25)}
+    [data-theme="dark"] #compliance{background:#130D1E;border-color:rgba(77,36,97,.15)}
+    [data-theme="dark"] footer{background:#060310;color:rgba(255,255,255,.4)}
+    [data-theme="dark"] .footer-logo{color:#F0ECF6}
+    html,body,nav,section,footer,.info-card,.use-card,.testi-card,.hero-product,.btn-secondary,.hero-overline{transition:var(--tdm)}
+
+    html{scroll-behavior:smooth;font-family:var(--font);background:var(--white);color:var(--dark);overflow-x:hidden}
+    body{overflow-x:hidden}
+
+    .reveal{opacity:0;transform:translateY(40px);transition:opacity 1.2s cubic-bezier(.22,1,.36,1),transform 1.2s cubic-bezier(.22,1,.36,1)}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    .reveal-delay-1{transition-delay:.15s}
+    .reveal-delay-2{transition-delay:.30s}
+    .reveal-delay-3{transition-delay:.45s}
+    .reveal-delay-4{transition-delay:.60s}
+
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 6vw;height:72px;background:rgba(250,250,250,.82);backdrop-filter:blur(24px);border-bottom:1px solid rgba(77,36,97,.08);transition:background .4s}
+    .nav-logo{font-size:1.35rem;font-weight:800;letter-spacing:-.5px;color:var(--purple)}
+    .nav-logo span{color:var(--yellow)}
+    .nav-links{display:flex;gap:2.5rem;list-style:none}
+    .nav-links a{text-decoration:none;font-size:.82rem;font-weight:500;color:var(--purple);letter-spacing:.04em;text-transform:uppercase;opacity:.7;transition:opacity .3s}
+    .nav-links a:hover{opacity:1}
+    .nav-cta{background:var(--purple);color:var(--yellow);padding:.55rem 1.4rem;border-radius:100px;font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:background .3s,transform .3s;box-shadow:0 4px 20px rgba(77,36,97,.25)}
+    .nav-cta:hover{background:var(--purple-light);transform:translateY(-1px)}
+    .dark-toggle,.lang-toggle{width:40px;height:40px;border-radius:50%;background:transparent;border:1.5px solid rgba(77,36,97,.25);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700;transition:all .35s;flex-shrink:0;color:var(--purple);letter-spacing:.02em}
+    .dark-toggle{font-size:1.05rem}
+    .dark-toggle:hover,.lang-toggle:hover{background:rgba(77,36,97,.08);border-color:var(--purple);transform:scale(1.08)}
+    [data-theme="dark"] .dark-toggle,[data-theme="dark"] .lang-toggle{border-color:rgba(249,233,45,.25);color:#c9bfda}
+    [data-theme="dark"] .dark-toggle:hover,[data-theme="dark"] .lang-toggle:hover{background:rgba(249,233,45,.08);border-color:var(--yellow)}
+
+    #hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:120px 6vw 80px;background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(77,36,97,.12) 0%,transparent 70%),var(--off-white);text-align:center;position:relative;overflow:hidden}
+    .hero-overline{display:inline-block;font-size:.72rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--purple);background:rgba(77,36,97,.08);border:1px solid rgba(77,36,97,.15);padding:.35rem 1.1rem;border-radius:100px;margin-bottom:2rem}
+    .hero h1{font-size:clamp(2.8rem,6vw,5.2rem);font-weight:800;line-height:1.08;letter-spacing:-.03em;color:var(--purple);max-width:900px}
+    .hero h1 em{font-style:normal;color:var(--dark)}
+    .hero-sub{margin-top:1.6rem;font-size:clamp(1.05rem,2.2vw,1.35rem);font-weight:300;color:var(--gray);max-width:560px;line-height:1.65}
+    .hero-cta-group{display:flex;gap:1rem;margin-top:2.8rem;justify-content:center;flex-wrap:wrap}
+    .btn-primary{background:var(--purple);color:var(--yellow);padding:1rem 2.4rem;border-radius:100px;font-family:var(--font);font-size:.95rem;font-weight:700;letter-spacing:.04em;cursor:pointer;border:none;text-decoration:none;display:inline-block;box-shadow:0 8px 32px rgba(77,36,97,.35);transition:all .4s cubic-bezier(.22,1,.36,1)}
+    .btn-primary:hover{background:var(--purple-light);transform:translateY(-3px);box-shadow:0 16px 48px rgba(77,36,97,.4)}
+    .btn-secondary{background:transparent;color:var(--purple);padding:1rem 2.4rem;border-radius:100px;font-family:var(--font);font-size:.95rem;font-weight:500;letter-spacing:.04em;cursor:pointer;border:1.5px solid rgba(77,36,97,.3);text-decoration:none;display:inline-block;transition:all .4s}
+    .btn-secondary:hover{border-color:var(--purple);background:rgba(77,36,97,.05)}
+    .hero-product{margin-top:5rem;width:min(720px,90vw);border-radius:28px;overflow:hidden;box-shadow:0 32px 96px rgba(77,36,97,.18),0 0 0 1px rgba(77,36,97,.06);position:relative}
+    .hero-product img{width:100%;display:block}
+    .hero-product-badge{position:absolute;top:18px;right:18px;background:rgba(249,233,45,.92);backdrop-filter:blur(8px);color:var(--purple);font-size:.68rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:.4rem .9rem;border-radius:100px}
+    .hero-stats{display:flex;gap:3.5rem;margin-top:4rem;justify-content:center;flex-wrap:wrap}
+    .stat{text-align:center}
+    .stat-num{font-size:2rem;font-weight:800;color:var(--purple);line-height:1}
+    .stat-label{font-size:.76rem;color:var(--gray);font-weight:400;margin-top:.3rem;letter-spacing:.05em}
+
+    section{padding:120px 6vw}
+    .section-overline{font-size:.72rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--purple);opacity:.6;display:block;margin-bottom:1rem}
+    .section-title{font-size:clamp(2rem,3.5vw,2.9rem);font-weight:800;line-height:1.15;letter-spacing:-.03em;color:var(--dark)}
+    .section-title span{color:var(--purple)}
+    .section-sub{font-size:1rem;color:var(--gray);line-height:1.75;max-width:560px;margin-top:.8rem;font-weight:300}
+
+    #how{background:var(--off-white);border-top:1px solid rgba(77,36,97,.06);border-bottom:1px solid rgba(77,36,97,.06)}
+    .how-grid{display:grid;grid-template-columns:1fr 1fr;gap:5vw;align-items:center;margin-top:4rem}
+    @media(max-width:768px){.how-grid{grid-template-columns:1fr}}
+    .how-text-col{position:relative}
+    .how-steps{margin-top:2.5rem;display:flex;flex-direction:column;gap:2rem}
+    .how-step{display:flex;gap:1.5rem;align-items:flex-start}
+    .how-step-icon{flex-shrink:0;width:44px;height:44px;border-radius:14px;background:var(--purple);color:var(--yellow);display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:700}
+    .how-step-content h4{font-size:1rem;font-weight:700;color:var(--dark);margin-bottom:.35rem}
+    .how-step-content p{font-size:.9rem;color:var(--gray);line-height:1.65}
+    .how-cards-col{display:flex;flex-direction:column;gap:1.25rem}
+    .info-card{background:var(--white);border-radius:20px;padding:1.6rem 1.8rem;border:1px solid rgba(77,36,97,.08);box-shadow:0 4px 24px rgba(77,36,97,.05);transition:transform .5s cubic-bezier(.22,1,.36,1),box-shadow .5s}
+    .info-card:hover{transform:translateY(-4px);box-shadow:0 12px 48px rgba(77,36,97,.12)}
+    .info-card-top{display:flex;align-items:center;gap:1rem;margin-bottom:.8rem}
+    .info-card-icon{width:38px;height:38px;border-radius:10px;background:var(--purple-pale);display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+    .info-card-title{font-size:.88rem;font-weight:700;color:var(--purple)}
+    .info-card-value{font-size:1.6rem;font-weight:800;color:var(--dark);letter-spacing:-.03em}
+    .info-card-sub{font-size:.78rem;color:var(--gray);margin-top:.2rem}
+    .progress-bar-wrap{margin-top:1.25rem}
+    .progress-label{display:flex;justify-content:space-between;font-size:.75rem;color:var(--gray);margin-bottom:.4rem}
+    .progress-track{height:6px;border-radius:100px;background:rgba(77,36,97,.1);overflow:hidden}
+    .progress-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--purple) 0%,var(--yellow) 100%);width:0%;transition:width 2s cubic-bezier(.22,1,.36,1)}
+    .progress-fill.animate{width:var(--target-width,80%)}
+
+    #usecases{background:var(--white)}
+    .usecases-header{max-width:580px}
+    .cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:4rem}
+    @media(max-width:900px){.cards-grid{grid-template-columns:1fr}}
+    .use-card{border-radius:24px;padding:2.5rem 2rem;background:var(--off-white);border:1px solid rgba(77,36,97,.07);position:relative;overflow:hidden;transition:transform .6s cubic-bezier(.22,1,.36,1),box-shadow .6s}
+    .use-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--purple),var(--yellow))}
+    .use-card:hover{transform:translateY(-6px);box-shadow:0 20px 64px rgba(77,36,97,.12)}
+    .use-card-emoji{font-size:2.5rem;margin-bottom:1.4rem;display:block}
+    .use-card h3{font-size:1.15rem;font-weight:700;color:var(--purple);margin-bottom:.9rem}
+    .use-card p{font-size:.9rem;color:var(--gray);line-height:1.75}
+    .use-card-tag{display:inline-block;margin-top:1.5rem;font-size:.7rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--purple);background:rgba(77,36,97,.08);padding:.3rem .8rem;border-radius:100px}
+
+    #testimonials{background:var(--purple);position:relative;overflow:hidden}
+    #testimonials .section-title{color:#fff}
+    #testimonials .section-overline{color:var(--yellow);opacity:1}
+    #testimonials .section-sub{color:rgba(255,255,255,.55)}
+    .testi-bg-glow{position:absolute;pointer-events:none;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(249,233,45,.08) 0%,transparent 70%);top:-100px;right:-100px}
+    .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:4rem}
+    @media(max-width:900px){.testi-grid{grid-template-columns:1fr}}
+    .testi-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:2rem;backdrop-filter:blur(12px);transition:background .5s,transform .6s cubic-bezier(.22,1,.36,1)}
+    .testi-card:hover{background:rgba(255,255,255,.09);transform:translateY(-4px)}
+    .testi-avatar{width:64px;height:64px;border-radius:50%;overflow:hidden;margin-bottom:1.25rem;border:2px solid rgba(249,233,45,.3);background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:1.6rem}
+    .testi-stars{color:var(--yellow);font-size:.85rem;letter-spacing:.1em;margin-bottom:1rem}
+    .testi-quote{font-size:.92rem;color:rgba(255,255,255,.75);line-height:1.8;font-weight:300}
+    .testi-quote em{font-style:italic;color:rgba(255,255,255,.55)}
+    .testi-name{margin-top:1.5rem;font-size:.82rem;font-weight:600;color:rgba(255,255,255,.5);letter-spacing:.08em;text-transform:uppercase}
+    .testi-meta{font-size:.72rem;color:rgba(255,255,255,.3);margin-top:.2rem}
+    .testi-badge{display:inline-block;margin-top:.8rem;font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--purple);background:var(--yellow);padding:.25rem .7rem;border-radius:100px}
+
+    #compliance{background:var(--off-white);padding:60px 6vw;border-top:1px solid rgba(77,36,97,.06);text-align:center}
+    .compliance-logos{display:flex;gap:3rem;justify-content:center;align-items:center;flex-wrap:wrap}
+    .compliance-logo{font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);opacity:.5}
+    .compliance-divider{width:1px;height:20px;background:var(--gray);opacity:.2}
+    .compliance-note{margin-top:2rem;font-size:.72rem;color:var(--gray);opacity:.5;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.7}
+
+    footer{background:var(--dark);padding:80px 6vw 40px;color:rgba(255,255,255,.4)}
+    .footer-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.06)}
+    .footer-brand{max-width:300px}
+    .footer-logo{font-size:1.3rem;font-weight:800;color:var(--white);margin-bottom:.6rem}
+    .footer-logo span{color:var(--yellow)}
+    .footer-tagline{font-size:.8rem;opacity:.4;max-width:280px;line-height:1.6}
+    .footer-cols{display:flex;gap:4rem;flex-wrap:wrap}
+    .footer-col h5{font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:1.2rem}
+    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.7rem}
+    .footer-col a{font-size:.85rem;color:rgba(255,255,255,.45);text-decoration:none;transition:color .3s}
+    .footer-col a:hover{color:var(--yellow)}
+    .footer-bottom{margin-top:2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+    .footer-copy{font-size:.78rem;opacity:.35}
+    .footer-disclaimer{font-size:.7rem;opacity:.25;text-align:right;max-width:480px;line-height:1.55}
+    .footer-disclaimer a{color:inherit;text-decoration:underline}
+
+    .grain{position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:999;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")}
+    .particles{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;overflow:hidden}
+    .particle{position:absolute;border-radius:50%;background:var(--purple);opacity:.04;animation:float linear infinite}
+    @keyframes float{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:.04}90%{opacity:.04}100%{transform:translateY(-20vh) scale(1.5);opacity:0}}
+    /* ===== PRICING ===== */
+    #pricing{background:var(--off-white);border-top:1px solid rgba(77,36,97,.06)}
+    [data-theme="dark"] #pricing{background:#130D1E}
+    .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:4rem}
+    @media(max-width:900px){.pricing-grid{grid-template-columns:1fr}}
+    .price-card{border-radius:24px;padding:2.5rem 2rem;background:var(--white);border:1px solid rgba(77,36,97,.1);position:relative;overflow:hidden;transition:transform .6s cubic-bezier(.22,1,.36,1),box-shadow .6s;display:flex;flex-direction:column;height:100%}
+    .price-card:hover{transform:translateY(-6px);box-shadow:0 24px 72px rgba(77,36,97,.15)}
+    .price-card.featured{border-color:var(--purple);box-shadow:0 16px 64px rgba(77,36,97,.15)}
+    [data-theme="dark"] .price-card{background:#1E1130;border-color:rgba(77,36,97,.25)}
+    [data-theme="dark"] .price-card.featured{box-shadow:0 16px 64px rgba(77,36,97,.25)}
+    .price-badge{display:inline-block;font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:.3rem .8rem;border-radius:100px;margin-bottom:1.2rem}
+    .price-badge.b-basic{background:rgba(77,36,97,.1);color:var(--purple)}
+    .price-badge.b-premium{background:var(--purple);color:var(--yellow)}
+    .price-badge.b-lifetime{background:var(--yellow);color:var(--purple)}
+    .price-name{font-size:1.25rem;font-weight:800;color:var(--dark);margin-bottom:.4rem}
+    .price-tagline{font-size:.88rem;color:var(--gray);margin-bottom:1.8rem;font-style:italic}
+    .price-currency{font-size:.7rem;font-weight:700;color:var(--purple);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.4rem}
+    .price-amount{font-size:2.6rem;font-weight:800;color:var(--purple);line-height:1;margin-bottom:.3rem}
+    .price-unit{font-size:.74rem;color:var(--gray);margin-bottom:1.8rem}
+    .price-features{list-style:none;margin-bottom:2rem;display:flex;flex-direction:column;gap:.7rem;flex-grow:1}
+    .price-features li{font-size:.85rem;color:var(--gray);display:flex;align-items:flex-start;gap:.6rem}
+    .price-features li::before{content:'✦';color:var(--purple);font-size:.6rem;flex-shrink:0;margin-top:.25rem}
+    .price-btn{width:100%;padding:1rem;border-radius:100px;font-family:var(--font);font-size:.88rem;font-weight:700;letter-spacing:.04em;cursor:pointer;border:none;transition:all .4s cubic-bezier(.22,1,.36,1);text-align:center}
+    .price-btn.btn-basic{background:rgba(77,36,97,.1);color:var(--purple)}
+    .price-btn.btn-basic:hover{background:var(--purple);color:var(--yellow)}
+    .price-btn.btn-premium{background:var(--purple);color:var(--yellow);box-shadow:0 8px 32px rgba(77,36,97,.3)}
+    .price-btn.btn-premium:hover{background:var(--purple-light);transform:translateY(-2px);box-shadow:0 16px 48px rgba(77,36,97,.4)}
+    .price-btn.btn-lifetime{background:var(--yellow);color:var(--purple);box-shadow:0 8px 32px rgba(249,233,45,.25)}
+    .price-btn.btn-lifetime:hover{background:#e8d620;transform:translateY(-2px)}
+    .price-note{margin-top:2.5rem;font-size:.72rem;color:var(--gray);opacity:.55;text-align:center;font-style:italic}
+
+    /* ===== GAME ===== */
+    #game{background:#0D0714;padding:120px 6vw}
+    .game-header{text-align:center;max-width:640px;margin:0 auto 4rem}
+    .game-header .section-title{color:#fff}
+    .game-header .section-sub{color:rgba(255,255,255,.5);margin:0 auto}
+    .game-header .section-overline{color:var(--yellow);opacity:1}
+    .game-arena{max-width:840px;margin:0 auto;border-radius:24px;overflow:hidden;box-shadow:0 32px 96px rgba(0,0,0,.5)}
+    .room-scene{width:100%;aspect-ratio:16/9;position:relative;background:#1a1a1a;overflow:hidden}
+    .room-back{position:absolute;inset:0;background:#1a1a1a;transition:background 1.2s ease}
+    .room-wall-l{position:absolute;left:0;top:0;bottom:0;width:18%;background:#141414;clip-path:polygon(0 0,100% 15%,100% 85%,0 100%);transition:background 1.2s}
+    .room-wall-r{position:absolute;right:0;top:0;bottom:0;width:18%;background:#141414;clip-path:polygon(0 15%,100% 0,100% 100%,0 85%);transition:background 1.2s}
+    .room-floor{position:absolute;bottom:0;left:0;right:0;height:38%;background:#111;clip-path:polygon(0 28%,100% 28%,100% 100%,0 100%);transition:background 1.2s}
+    .room-window{position:absolute;top:10%;left:50%;transform:translateX(-50%);width:20%;aspect-ratio:1/1.2;border:5px solid #2a2a2a;background:#0a0a0a;position:absolute;transition:all 1.4s}
+    .room-win-inner{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:4px;padding:4px}
+    .room-pane{background:#050505;border-radius:2px;transition:background 1.4s}
+    .room-crack{position:absolute;bottom:39%;left:22%;opacity:.35;transition:opacity 1.2s}
+    .room-crack svg{width:48px;height:48px}
+    .room-overlay{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity 1.8s}
+    .room-bloom{position:absolute;inset:0;opacity:0;pointer-events:none;background:radial-gradient(ellipse at center,rgba(249,233,45,.15) 0%,rgba(77,36,97,.25) 50%,transparent 80%);transition:opacity 2s}
+    .dream-elems{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:1.5rem;font-size:2.5rem;opacity:0;filter:blur(8px);transition:opacity 2s,filter 2s;pointer-events:none}
+    .room-hud{position:absolute;top:12px;left:14px;display:flex;flex-direction:column;gap:4px}
+    .room-hud-line{font-size:.55rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.25);font-family:monospace;transition:color 1.2s}
+    .game-controls{background:rgba(0,0,0,.55);backdrop-filter:blur(16px);padding:1.8rem 2rem;display:flex;flex-direction:column;align-items:center;gap:.9rem}
+    .dose-row{display:flex;align-items:center;gap:1.2rem;width:100%}
+    .dose-lbl{font-size:.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.45);white-space:nowrap}
+    .dose-slider{flex:1;-webkit-appearance:none;appearance:none;height:6px;border-radius:100px;background:rgba(255,255,255,.12);outline:none;cursor:pointer;transition:background .3s}
+    .dose-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;background:var(--yellow);cursor:pointer;box-shadow:0 0 14px rgba(249,233,45,.55);transition:transform .2s}
+    .dose-slider::-webkit-slider-thumb:hover{transform:scale(1.25)}
+    .dose-pct{font-size:1.5rem;font-weight:800;color:var(--yellow);min-width:64px;text-align:right;font-variant-numeric:tabular-nums;transition:color .3s}
+    .dose-warn{font-size:.68rem;color:rgba(255,255,255,.25);letter-spacing:.08em;text-align:center}
+
+    /* ===== GLITCH OVERLAY ===== */
+    .glitch-overlay{position:fixed;inset:0;z-index:9998;display:none;flex-direction:column;align-items:center;justify-content:center;background:#000}
+    .glitch-overlay.active{display:flex;animation:glitchBg .1s steps(1) infinite}
+    .glitch-msg{font-family:var(--font);font-size:clamp(1.1rem,2.5vw,1.9rem);font-weight:800;color:#fff;text-align:center;line-height:1.5;max-width:580px;padding:2rem;white-space:pre-line}
+    .glitch-msg .g-line1{text-shadow:3px 0 #f00,-3px 0 #0ff,0 0 20px rgba(255,0,0,.5);animation:gShift .08s steps(1) infinite}
+    .glitch-msg .g-line2{color:rgba(255,0,0,.7);font-size:.85rem;letter-spacing:.2em;text-transform:uppercase;margin-top:.8rem;animation:flicker .25s infinite}
+    .glitch-sub-badge{margin-top:2rem;font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.25);border:1px solid rgba(255,0,0,.3);padding:.4rem 1rem;border-radius:4px}
+    @keyframes glitchBg{0%{background:#000}15%{background:#0d0005;transform:translate(2px,0)}30%{background:#00050d;transform:translate(-2px,1px) skewX(.5deg)}50%{background:#050d00;transform:translate(1px,-1px)}70%{background:#0d0005;transform:translate(-1px,2px)}100%{background:#000;transform:none}}
+    @keyframes gShift{0%{text-shadow:3px 0 #f00,-3px 0 #0ff}25%{text-shadow:-3px 0 #f00,3px 0 #0ff,0 2px #ff0}50%{text-shadow:2px 0 #0ff,-2px 0 #f00}75%{text-shadow:-2px 2px #ff0,2px -2px #0ff}100%{text-shadow:3px 0 #f00,-3px 0 #0ff}}
+    @keyframes flicker{0%,100%{opacity:1}48%{opacity:1}50%{opacity:0}52%{opacity:1}}
+  </style>
+</head>
+<body>
+  <div class="grain"></div>
+
+  <nav>
+    <div class="nav-logo">Synapse<span>.</span></div>
+    <ul class="nav-links">
+      <li><a href="#how" data-i18n="nav.tech"></a></li>
+      <li><a href="#usecases" data-i18n="nav.programs"></a></li>
+      <li><a href="#testimonials" data-i18n="nav.exp"></a></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:.85rem">
+      <button class="lang-toggle" id="langToggle" aria-label="Dil değiştir">TR</button>
+      <button class="dark-toggle" id="darkToggle" aria-label="Gece modu">🌙</button>
+      <a href="#hero" class="nav-cta" data-i18n="nav.cta"></a>
+    </div>
+  </nav>
+
+  <section id="hero">
+    <div class="particles" id="particles"></div>
+    <div class="hero-overline reveal" data-i18n="hero.overline"></div>
+    <h1 class="hero reveal reveal-delay-1" data-i18n-html="hero.h1"></h1>
+    <p class="hero-sub reveal reveal-delay-2" data-i18n-html="hero.sub"></p>
+    <div class="hero-cta-group reveal reveal-delay-3">
+      <a href="#usecases" class="btn-primary" data-i18n="hero.btn1"></a>
+      <a href="#how" class="btn-secondary" data-i18n="hero.btn2"></a>
+    </div>
+    <div class="hero-product reveal reveal-delay-4">
+      <img src="metamind_product.png?v=2" alt="MetaMind™ Neural Interface &amp; Synapse Port Bio-Chip" loading="eager"/>
+      <div class="hero-product-badge">MetaMind™ v4.2</div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat reveal reveal-delay-1"><div class="stat-num">98.7<small>%</small></div><div class="stat-label" data-i18n="stat.s1"></div></div>
+      <div class="stat reveal reveal-delay-2"><div class="stat-num">14M<small>+</small></div><div class="stat-label" data-i18n="stat.s2"></div></div>
+      <div class="stat reveal reveal-delay-3"><div class="stat-num">0.3<small>ms</small></div><div class="stat-label" data-i18n="stat.s3"></div></div>
+      <div class="stat reveal reveal-delay-4"><div class="stat-num">FDA<small>&nbsp;✓</small></div><div class="stat-label" data-i18n="stat.s4"></div></div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="how-grid">
+      <div class="how-text-col">
+        <span class="section-overline reveal" data-i18n="how.overline"></span>
+        <h2 class="section-title reveal reveal-delay-1" data-i18n-html="how.title"></h2>
+        <p class="section-sub reveal reveal-delay-2" data-i18n="how.sub"></p>
+        <div class="how-steps">
+          <div class="how-step reveal reveal-delay-1">
+            <div class="how-step-icon">01</div>
+            <div class="how-step-content">
+              <h4 data-i18n="how.s1h"></h4>
+              <p data-i18n="how.s1p"></p>
+            </div>
+          </div>
+          <div class="how-step reveal reveal-delay-2">
+            <div class="how-step-icon">02</div>
+            <div class="how-step-content">
+              <h4 data-i18n="how.s2h"></h4>
+              <p data-i18n="how.s2p"></p>
+            </div>
+          </div>
+          <div class="how-step reveal reveal-delay-3">
+            <div class="how-step-icon">03</div>
+            <div class="how-step-content">
+              <h4 data-i18n="how.s3h"></h4>
+              <p data-i18n="how.s3p"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="how-cards-col">
+        <div class="info-card reveal">
+          <div class="info-card-top"><div class="info-card-icon">🧬</div><div class="info-card-title" data-i18n="card1.title"></div></div>
+          <div class="info-card-value">+340%</div>
+          <div class="info-card-sub" data-i18n="card1.sub"></div>
+          <div class="progress-bar-wrap">
+            <div class="progress-label"><span data-i18n="card1.prog"></span><span>94%</span></div>
+            <div class="progress-track"><div class="progress-fill" style="--target-width:94%"></div></div>
+          </div>
+        </div>
+        <div class="info-card reveal reveal-delay-1">
+          <div class="info-card-top"><div class="info-card-icon">💛</div><div class="info-card-title" data-i18n="card2.title"></div></div>
+          <div class="info-card-value">12.4 TB</div>
+          <div class="info-card-sub" data-i18n="card2.sub"></div>
+          <div class="progress-bar-wrap">
+            <div class="progress-label"><span data-i18n="card2.prog"></span><span>99.1%</span></div>
+            <div class="progress-track"><div class="progress-fill" style="--target-width:99%"></div></div>
+          </div>
+        </div>
+        <div class="info-card reveal reveal-delay-2">
+          <div class="info-card-top"><div class="info-card-icon">🔮</div><div class="info-card-title" data-i18n="card3.title"></div></div>
+          <div class="info-card-value">∞ Loop</div>
+          <div class="info-card-sub" data-i18n="card3.sub"></div>
+          <div class="progress-bar-wrap">
+            <div class="progress-label"><span data-i18n="card3.prog"></span><span>87%</span></div>
+            <div class="progress-track"><div class="progress-fill" style="--target-width:87%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="usecases">
+    <div class="usecases-header">
+      <span class="section-overline reveal" data-i18n="use.overline"></span>
+      <h2 class="section-title reveal reveal-delay-1" data-i18n-html="use.title"></h2>
+      <p class="section-sub reveal reveal-delay-2" data-i18n="use.sub"></p>
+    </div>
+    <div class="cards-grid">
+      <div class="use-card reveal">
+        <span class="use-card-emoji">🕊️</span>
+        <h3 data-i18n="use1.h"></h3>
+        <p data-i18n="use1.p"></p>
+        <span class="use-card-tag" data-i18n="use1.tag"></span>
+      </div>
+      <div class="use-card reveal reveal-delay-1">
+        <span class="use-card-emoji">🌿</span>
+        <h3 data-i18n="use2.h"></h3>
+        <p data-i18n="use2.p"></p>
+        <span class="use-card-tag" data-i18n="use2.tag"></span>
+      </div>
+      <div class="use-card reveal reveal-delay-2">
+        <span class="use-card-emoji">⚡</span>
+        <h3 data-i18n="use3.h"></h3>
+        <p data-i18n="use3.p"></p>
+        <span class="use-card-tag" data-i18n="use3.tag"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING & CHECKOUT -->
+  <section id="pricing">
+    <div class="game-header">
+      <span class="section-overline reveal" data-i18n="price.overline"></span>
+      <h2 class="section-title reveal reveal-delay-1" data-i18n-html="price.title"></h2>
+      <p class="section-sub reveal reveal-delay-2" data-i18n="price.sub"></p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card reveal">
+        <span class="price-badge b-basic" data-i18n="price.b1"></span>
+        <h3 class="price-name" data-i18n="price.n1"></h3>
+        <p class="price-tagline" data-i18n="price.t1"></p>
+        <div class="price-currency">Synapse Credits</div>
+        <div class="price-amount">2,400</div>
+        <div class="price-unit" data-i18n="price.u1"></div>
+        <ul class="price-features">
+          <li data-i18n="price.f1a"></li>
+          <li data-i18n="price.f1b"></li>
+          <li data-i18n="price.f1c"></li>
+        </ul>
+        <button class="price-btn btn-basic" data-i18n="price.btn1"></button>
+      </div>
+      <div class="price-card featured reveal reveal-delay-1">
+        <span class="price-badge b-premium" data-i18n="price.b2"></span>
+        <h3 class="price-name" data-i18n="price.n2"></h3>
+        <p class="price-tagline" data-i18n="price.t2"></p>
+        <div class="price-currency">Synapse Credits</div>
+        <div class="price-amount">8,900</div>
+        <div class="price-unit" data-i18n="price.u2"></div>
+        <ul class="price-features">
+          <li data-i18n="price.f2a"></li>
+          <li data-i18n="price.f2b"></li>
+          <li data-i18n="price.f2c"></li>
+        </ul>
+        <button class="price-btn btn-premium" data-i18n="price.btn2"></button>
+      </div>
+      <div class="price-card reveal reveal-delay-2">
+        <span class="price-badge b-lifetime" data-i18n="price.b3"></span>
+        <h3 class="price-name" data-i18n="price.n3"></h3>
+        <p class="price-tagline" data-i18n="price.t3"></p>
+        <div class="price-currency" data-i18n="price.cur3"></div>
+        <div class="price-amount">100<span style="font-size:1.4rem">%</span></div>
+        <div class="price-unit" data-i18n="price.u3"></div>
+        <ul class="price-features">
+          <li data-i18n="price.f3a"></li>
+          <li data-i18n="price.f3b"></li>
+          <li data-i18n="price.f3c"></li>
+        </ul>
+        <button class="price-btn btn-lifetime" data-i18n="price.btn3"></button>
+      </div>
+    </div>
+    <p class="price-note reveal reveal-delay-2" data-i18n="price.note"></p>
+  </section>
+
+  <!-- INTERACTIVE EXPERIENCE / MINI GAME -->
+  <section id="game">
+    <div class="game-header">
+      <span class="section-overline reveal" data-i18n="game.overline"></span>
+      <h2 class="section-title reveal reveal-delay-1" data-i18n-html="game.title"></h2>
+      <p class="section-sub reveal reveal-delay-2" data-i18n="game.sub"></p>
+    </div>
+    <div class="game-arena reveal reveal-delay-3" id="gameArena">
+      <div class="room-scene" id="roomScene">
+        <div class="room-back" id="roomBack"></div>
+        <div class="room-wall-l" id="roomWallL"></div>
+        <div class="room-wall-r" id="roomWallR"></div>
+        <div class="room-floor" id="roomFloor"></div>
+        <div class="room-crack">
+          <svg viewBox="0 0 100 100" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="2">
+            <path d="M50 0 L45 20 L55 35 L50 60 L60 80 L50 100"/>
+            <path d="M55 35 L70 45 L80 40"/>
+            <path d="M50 60 L30 70 L20 65"/>
+          </svg>
+        </div>
+        <div class="room-window" id="roomWindow">
+          <div class="room-win-inner">
+            <div class="room-pane" id="rp1"></div><div class="room-pane" id="rp2"></div>
+            <div class="room-pane" id="rp3"></div><div class="room-pane" id="rp4"></div>
+          </div>
+        </div>
+        <div class="room-overlay" id="roomOverlay"></div>
+        <div class="room-bloom" id="roomBloom"></div>
+        <div class="dream-elems" id="dreamElems">
+          <span>🌸</span><span>🎠</span><span>🕊️</span>
+        </div>
+        <div class="room-hud">
+          <span class="room-hud-line">SYS.STATUS: <span id="hudSys" style="color:#aaa">UNSTABLE</span></span>
+          <span class="room-hud-line">LINK_QUAL: <span id="hudLink" style="color:#aaa">0.0%</span></span>
+          <span class="room-hud-line">NEUROCHEM: <span id="hudChem" style="color:#aaa">DEPLETED</span></span>
+        </div>
+      </div>
+      <div class="game-controls">
+        <div class="dose-row">
+          <span class="dose-lbl" id="doseLabel" data-i18n="game.lbl"></span>
+          <input type="range" class="dose-slider" id="doseSlider" min="0" max="100" value="0" step="1"/>
+          <span class="dose-pct" id="dosePct">0%</span>
+        </div>
+        <div class="dose-warn" data-i18n="game.warn"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonials">
+    <div class="testi-bg-glow"></div>
+    <span class="section-overline reveal" data-i18n="testi.overline"></span>
+    <h2 class="section-title reveal reveal-delay-1" data-i18n-html="testi.title"></h2>
+    <p class="section-sub reveal reveal-delay-2" data-i18n="testi.sub"></p>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="testi-avatar">👩</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote" data-i18n-html="t1.quote"></p>
+        <div class="testi-name" data-i18n="t1.name"></div>
+        <div class="testi-meta" data-i18n="t1.meta"></div>
+        <span class="testi-badge" data-i18n="testi.badge"></span>
+      </div>
+      <div class="testi-card reveal reveal-delay-1">
+        <div class="testi-avatar">👨</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote" data-i18n-html="t2.quote"></p>
+        <div class="testi-name" data-i18n="t2.name"></div>
+        <div class="testi-meta" data-i18n="t2.meta"></div>
+        <span class="testi-badge" data-i18n="testi.badge"></span>
+      </div>
+      <div class="testi-card reveal reveal-delay-2">
+        <div class="testi-avatar">👴</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote" data-i18n-html="t3.quote"></p>
+        <div class="testi-name" data-i18n="t3.name"></div>
+        <div class="testi-meta" data-i18n="t3.meta"></div>
+        <span class="testi-badge" data-i18n="testi.badge"></span>
+      </div>
+    </div>
+  </section>
+
+  <section id="compliance">
+    <div class="compliance-logos reveal">
+      <span class="compliance-logo">NeuroFDA</span>
+      <div class="compliance-divider"></div>
+      <span class="compliance-logo">ISO 28922</span>
+      <div class="compliance-divider"></div>
+      <span class="compliance-logo">Synapse Medical Board</span>
+      <div class="compliance-divider"></div>
+      <span class="compliance-logo">Global Mind Ethics Council</span>
+      <div class="compliance-divider"></div>
+      <span class="compliance-logo">WHO Neural Wellness Accord</span>
+    </div>
+    <p class="compliance-note reveal reveal-delay-1" data-i18n="comp.note"></p>
+  </section>
+
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">Synapse<span>.</span></div>
+        <p class="footer-tagline" data-i18n="foot.tagline"></p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h5 data-i18n="foot.col1"></h5>
+          <ul>
+            <li><a href="#">MetaMind™</a></li>
+            <li><a href="#">Synapse Port</a></li>
+            <li><a href="#" data-i18n="foot.l1c"></a></li>
+            <li><a href="#" data-i18n="foot.l1d"></a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5 data-i18n="foot.col2"></h5>
+          <ul>
+            <li><a href="#" data-i18n="foot.l2a"></a></li>
+            <li><a href="#" data-i18n="foot.l2b"></a></li>
+            <li><a href="#" data-i18n="foot.l2c"></a></li>
+            <li><a href="#" data-i18n="foot.l2d"></a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5 data-i18n="foot.col3"></h5>
+          <ul>
+            <li><a href="#" data-i18n="foot.l3a"></a></li>
+            <li><a href="#" data-i18n="foot.l3b"></a></li>
+            <li><a href="#disclaimer" data-i18n="foot.l3c"></a></li>
+            <li><a href="#" data-i18n="foot.l3d"></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy" data-i18n="foot.copy"></div>
+      <div class="footer-disclaimer" id="disclaimer">
+        <a href="#" data-i18n="foot.dis.title"></a>
+        <span data-i18n="foot.dis.text"></span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="glitch-overlay" id="glitchOverlay">
+    <div class="glitch-msg">
+      <div class="g-line1" data-i18n="glitch.l1"></div>
+      <div class="g-line2" data-i18n="glitch.l2"></div>
+    </div>
+    <div class="glitch-sub-badge" data-i18n="glitch.b"></div>
+  </div>
+
+  <script>
+    // ===================== i18n TRANSLATIONS =====================
+    const T = {
+      tr: {
+        'nav.tech':'Teknoloji','nav.programs':'Programlar','nav.exp':'Deneyimler','nav.cta':'Hemen İyileşin',
+        'hero.overline':'Synapse Corp. ™ — Nöral Uyum Programı 2055',
+        'hero.h1':'Geçmişiniz<br/><em>en güvenli geleceğinizdir.</em>',
+        'hero.sub':'En mutlu anılarınızı yeniden yaşayın. Sonsuza dek.<br/>Klinik olarak onaylı hafıza entegrasyon sistemi ile duygusal refahınızı kalıcı hale getirin.',
+        'hero.btn1':'Geçmişinize Bağlanın','hero.btn2':'Nasıl Çalışır? →',
+        'stat.s1':'Kullanıcı Memnuniyeti','stat.s2':'Aktif Kullanıcı','stat.s3':'Nöral Gecikme','stat.s4':'Nörobilim Onaylı',
+        'how.overline':'Teknoloji',
+        'how.title':'Beyin-Veri<br/><span>Arayüzü</span>',
+        'how.sub':'MetaMind\'ın tescilli Synapse Port bio-çipi, sinaptik iletimi tam çözünürlükte dijital ortama aktarır. Anılarınız artık yalnızca anı değil — çağrılabilir bir varlıktır.',
+        'how.s1h':'Synapse Port Entegrasyonu','how.s1p':'Üç dakikalık ambulatuar prosedür. 2mm bio-çip, temporal lobun posterior bölgesine non-invaziv intrakortikal yerleştirme ile konumlandırılır.',
+        'how.s2h':'Nörokimyasal Haritalama','how.s2p':'Sistem; dopamin, oksitosin ve serotonin salgılarını atomik hassasiyette ölçerek her anıyı duygusal ağırlığıyla birlikte sınıflandırır ve arşivler.',
+        'how.s3h':'MetaMind Oturumu','how.s3p':'Arayüz gözlükleri, arşivlenen anıyı seçili nörokimyasal profil ile birlikte gerçek zamanlı olarak prefrontal kortekse yansıtır. Gerçekten ayırt edilemez.',
+        'card1.title':'Dopamin Çıktısı','card1.sub':'Kontrol grubu ile kıyaslandığında ortalama oturum değeri','card1.prog':'Biyosentez Aktivasyonu',
+        'card2.title':'Oksitosin Bağlanması','card2.sub':'Ortalama kullanıcı arşiv kapasitesi — 47 yıllık anı eşdeğeri','card2.prog':'Hafıza Güvenilirliği',
+        'card3.title':'Serotonin Stabilitesi','card3.sub':'Oturum süre sınırı kaldırıldı — Premium üyeler için','card3.prog':'Kullanıcı Sürekliliği',
+        'use.overline':'Kişiselleştirilmiş Programlar',
+        'use.title':'Herkesin <span>iyileşme yolu</span> farklıdır.',
+        'use.sub':'Klinik ekibimiz, sizin için en uygun MetaMind programını tasarlar. Hiçbir anı çok uzak değildir.',
+        'use1.h':'Anı ve Bağ Restorasyonu','use1.p':'Eski güzel günleri ve hayatınızdan geçmiş sevdiklerinizi yeniden hissedin. Onların sesi, kokusu, sıcaklığı — hepsi orada, tam olarak bıraktığınız yerde sizi bekliyor.','use1.tag':'Nostalji Protokolü',
+        'use2.h':'Terapi ve Duygusal Arınma','use2.p':'Duygularınızı yeniden keşfedin. Bugünün gürültüsünden uzak, travmaların erişemeyeceği huzurlu bir zihin alanında kendinizi bulun. Tamamen güvenli, tamamen sizin.','use2.tag':'Zihni Dinlendirme',
+        'use3.h':'Zirve Deneyimi Erişimi','use3.p':'Hayatınızın en büyük hormonal dalgalanmalarını ve en başarılı anlarınızı tekrar yaşayın. Zafer, sevgi, doruktaki güç — tam nörokimyasal dokusuyla geri gelir.','use3.tag':'Performans Programı',
+        'testi.overline':'Kullanıcı Deneyimleri',
+        'testi.title':'Onlar artık başka<br/>bir yerde yaşıyor.',
+        'testi.sub':'Dünya genelinde 14 milyondan fazla kullanıcı, MetaMind ile duygusal refahlarını kalıcı hale getirdi.','testi.badge':'Onaylı Kullanıcı',
+        't1.quote':'"Artık bugünün sorunlarını düşünmek zorunda değilim. Sadece oğlumun doğduğu o sıcak geceyi yaşıyorum, tekrar tekrar. <em>Her oturumda biraz daha net oluyor.</em>"','t1.name':'— Eleonora V., 48','t1.meta':'Lizbon, Portekiz · 14 aylık kullanıcı',
+        't2.quote':'"Terapistim beni bugüne odaklanmam gerektiğine inandırmaya çalışırdı. MetaMind\'ı denedikten sonra terapisti bıraktım. <em>Bugün zaten dönülmez bir şey.</em>"','t2.name':'— Marcus T., 34','t2.meta':'Oslo, Norveç · 8 aylık kullanıcı',
+        't3.quote':'"Karım 11 yıl önce vefat etti. Onunla ilk tanıştığım o Pazar sabahını bu hafta üç kez yaşadım. <em>Hatırlamak değil bu — o hâlâ burada.</em>"','t3.name':'— Robert H., 67','t3.meta':'Toronto, Kanada · 22 aylık kullanıcı',
+        'comp.note':'MetaMind klinik kullanımı, 2051 tarihli Nöral Arayüz Güvenlik Direktifi ve 2053 Dijital Bilinç Hakları Anlaşması çerçevesinde düzenlenmektedir. Tüm oturumlar şifreli ve kullanıcı rızasına dayalıdır.',
+        'foot.tagline':'Duygusal refahın geleceği. Zihniniz, mükemmel şekilde korunmuş.',
+        'foot.col1':'Ürün','foot.col2':'Şirket','foot.col3':'Yasal',
+        'foot.l1c':'Klinik Programlar','foot.l1d':'Kurumsal Çözümler',
+        'foot.l2a':'Hakkımızda','foot.l2b':'Araştırma','foot.l2c':'Kariyer','foot.l2d':'Basın',
+        'foot.l3a':'Gizlilik Politikası','foot.l3b':'Çerez Yönetimi','foot.l3c':'Kullanıcı Feragatnamesi','foot.l3d':'Nöral Veri Sözleşmesi',
+        'foot.copy':'© 2055 Synapse Corporation. Tüm hakları saklıdır.',
+        'foot.dis.title':'Kullanıcı Feragatnamesi: ',
+        'foot.dis.text':'MetaMind™ cihazı ve Synapse Port biyolojik arayüzü, kullanıcının hafıza ve nörokimyasal verilerini süresiz olarak Synapse Corp. sunucularında saklamak üzere tasarlanmıştır. Kullanıcı, ürünü satın alarak zihinsel içeriklerinin pazarlama ve araştırma amaçlı kullanılabileceğini, simüle edilen anıların gerçek anıların yerini geçebileceğini kabul eder. Synapse Corp., geçmiş bağımlılığı, anlık gerçeklik yitimi veya sosyal işlevsellikte meydana gelebilecek kalıcı değişikliklerden sorumlu tutulamaz. Çıkış hakkı, Premium üyeliğin sonlandırılmasından 90 gün sonra tanınır.',
+        'price.overline':'Uyum Paketleri',
+        'price.title':'Metalaşmaya <span>Hazır mısınız?</span>',
+        'price.sub':'Hafıza entegrasyonu tamamen sizin kontrolünüzdedir. Seçiminizi yapın ve ilk dozunuzla geçmişinizi inşa edin.',
+        'price.b1':'TEMEL','price.n1':'Temel Hatırlama','price.t1':'Sıradan günlerinizi renklendirin.','price.u1':'/ DOZ','price.f1a':'Geçmişteki 5 ana anıya erişim','price.f1b':'Standart Nöral Çözünürlük','price.f1c':'Temel Serotonin Desteği','price.btn1':'Zihninizi Özgürleştirin',
+        'price.b2':'ÖNERİLEN','price.n2':'Premium Coşku','price.t2':'Gerçeklikten tamamen arının.','price.u2':'/ AYLIK','price.f2a':'Sınırsız Anı Döngüsü','price.f2b':'Yüksek Çözünürlüklü Projeksiyon','price.f2c':'+%40 Serotonin/Dopamin Takviyesi','price.btn2':'Programa Katılın',
+        'price.b3':'ELİT','price.n3':'Ömür Boyu Döngü','price.t3':'Bedeniniz uyurken, zihniniz yaşasın.','price.cur3':'BİYOMETRİK İZİN','price.u3':'(SONSUZ)','price.f3a':'Kalıcı Bilinç Aktarımı','price.f3b':'Fiziksel Beden Bakım Ünitesi','price.f3c':'Sonsuz Zirve Deneyimi Kilitlenmesi','price.btn3':'Doza Başlayın',
+        'price.note':'Fiyatlarımıza Global Zihin Etik Vergisi dahildir. Synapse Kredisi işlemleri geri alınamaz.',
+        'game.overline':'İnteraktif Test',
+        'game.title':'MetaMind <span>Uyumluluk Testi</span>',
+        'game.sub':'Sistemin zihninizle uyumunu test edin. Synapse bağlantısını başlatmak için dozajı artırın.',
+        'game.lbl':'DOZAJI ARTIR (BAĞLANTI)','game.warn':'UYARI: GERÇEKLİK BİLİNCİ BİRDEN KAPANABİLİR. DİKKATLİ İLERLEYİN.',
+        'glitch.l1':'GERÇEKLİK BAĞLANTISI KESİLDİ.\nBİLİNCİNİZ KİLİTLENDİ.','glitch.l2':'SİSTEME HOŞ GELDİNİZ.','glitch.b':'METAMIND İLE %100 UYUMLUSUNUZ.'
+      },
+      en: {
+        'nav.tech':'Technology','nav.programs':'Programs','nav.exp':'Experiences','nav.cta':'Heal Now',
+        'hero.overline':'Synapse Corp. ™ — Neural Alignment Program 2055',
+        'hero.h1':'Your past is your<br/><em>most secure future.</em>',
+        'hero.sub':'Relive your happiest memories. Forever.<br/>Our clinically approved memory integration system makes emotional wellness permanent.',
+        'hero.btn1':'Connect to Your Past','hero.btn2':'How Does It Work? →',
+        'stat.s1':'User Satisfaction','stat.s2':'Active Users','stat.s3':'Neural Latency','stat.s4':'Neuroscience Approved',
+        'how.overline':'Technology',
+        'how.title':'Brain-Data<br/><span>Interface</span>',
+        'how.sub':'MetaMind\'s patented Synapse Port bio-chip transfers synaptic transmission to the digital medium at full resolution. Your memories are no longer just memories — they are a callable reality.',
+        'how.s1h':'Synapse Port Integration','how.s1p':'A three-minute outpatient procedure. The 2mm bio-chip is positioned in the posterior temporal lobe via non-invasive intracortical placement.',
+        'how.s2h':'Neurochemical Mapping','how.s2p':'The system measures dopamine, oxytocin and serotonin secretions with atomic precision, classifying and archiving each memory together with its emotional weight.',
+        'how.s3h':'MetaMind Session','how.s3p':'The interface headset projects the archived memory with the selected neurochemical profile in real time to the prefrontal cortex. Indistinguishable from reality.',
+        'card1.title':'Dopamine Output','card1.sub':'Average session value compared to the control group','card1.prog':'Biosynthesis Activation',
+        'card2.title':'Oxytocin Binding','card2.sub':'Average user archive capacity — equivalent to 47 years of memories','card2.prog':'Memory Reliability',
+        'card3.title':'Serotonin Stability','card3.sub':'Session time limit removed — for Premium members','card3.prog':'User Continuity',
+        'use.overline':'Personalised Programs',
+        'use.title':'Everyone\'s <span>healing path</span> is different.',
+        'use.sub':'Our clinical team designs the most suitable MetaMind program for you. No memory is too far away.',
+        'use1.h':'Memory & Bond Restoration','use1.p':'Relive the good old days and feel the loved ones who have passed through your life again. Their voice, their scent, their warmth — all there, exactly where you left them.','use1.tag':'Nostalgia Protocol',
+        'use2.h':'Therapy & Emotional Cleansing','use2.p':'Rediscover your emotions. Find yourself in a peaceful mental space, away from today\'s noise, beyond the reach of trauma. Completely safe, completely yours.','use2.tag':'Mind Recovery',
+        'use3.h':'Peak Experience Access','use3.p':'Relive the greatest hormonal surges and most successful moments of your life. Victory, love, power at its peak — returning with its full neurochemical texture.','use3.tag':'Performance Program',
+        'testi.overline':'User Experiences',
+        'testi.title':'They now live<br/>somewhere else.',
+        'testi.sub':'More than 14 million users worldwide have made their emotional wellbeing permanent with MetaMind.','testi.badge':'Verified User',
+        't1.quote':'"I no longer have to think about today\'s problems. I just live that warm night when my son was born, over and over. <em>It gets a little clearer with each session.</em>"','t1.name':'— Eleonora V., 48','t1.meta':'Lisbon, Portugal · 14-month user',
+        't2.quote':'"My therapist used to try to convince me I needed to focus on the present. After trying MetaMind, I left the therapist. <em>Today is already something that cannot be returned to.</em>"','t2.name':'— Marcus T., 34','t2.meta':'Oslo, Norway · 8-month user',
+        't3.quote':'"My wife passed away 11 years ago. I have lived that Sunday morning when we first met three times this week. <em>This is not remembering — she is still here.</em>"','t3.name':'— Robert H., 67','t3.meta':'Toronto, Canada · 22-month user',
+        'comp.note':'MetaMind clinical use is regulated under the 2051 Neural Interface Safety Directive and the 2053 Digital Consciousness Rights Agreement. All sessions are encrypted and based on user consent.',
+        'foot.tagline':'The future of emotional wellness. Your mind, perfectly preserved.',
+        'foot.col1':'Product','foot.col2':'Company','foot.col3':'Legal',
+        'foot.l1c':'Clinical Programs','foot.l1d':'Enterprise Solutions',
+        'foot.l2a':'About Us','foot.l2b':'Research','foot.l2c':'Careers','foot.l2d':'Press',
+        'foot.l3a':'Privacy Policy','foot.l3b':'Cookie Management','foot.l3c':'User Disclaimer','foot.l3d':'Neural Data Agreement',
+        'foot.copy':'© 2055 Synapse Corporation. All rights reserved.',
+        'foot.dis.title':'User Disclaimer: ',
+        'foot.dis.text':'The MetaMind™ device and Synapse Port biological interface are designed to store the user\'s memory and neurochemical data on Synapse Corp. servers indefinitely. By purchasing the product, the user agrees that their mental content may be used for marketing and research purposes, and that simulated memories may replace real memories. Synapse Corp. cannot be held liable for temporal dissociation, momentary loss of reality or permanent changes in social functioning. The right to exit is granted 90 days after the termination of Premium membership.',
+        'price.overline':'Alignment Packages',
+        'price.title':'Are You Ready <span>To Become Meta?</span>',
+        'price.sub':'Memory integration is completely under your control. Make your choice and build your past with your first dose.',
+        'price.b1':'BASIC','price.n1':'Basic Recall','price.t1':'Colorize your ordinary days.','price.u1':'/ DOSE','price.f1a':'Access to 5 core past memories','price.f1b':'Standard Neural Resolution','price.f1c':'Basic Serotonin Support','price.btn1':'Free Your Mind',
+        'price.b2':'RECOMMENDED','price.n2':'Premium Euphoria','price.t2':'Purify completely from reality.','price.u2':'/ MONTH','price.f2a':'Unlimited Memory Loop','price.f2b':'High Resolution Projection','price.f2c':'+40% Serotonin/Dopamine Boost','price.btn2':'Join the Program',
+        'price.b3':'ELITE','price.n3':'Lifetime Loop','price.t3':'Let your mind live while your body sleeps.','price.cur3':'BIOMETRIC CONSENT','price.u3':'(INFINITE)','price.f3a':'Permanent Consciousness Transfer','price.f3b':'Physical Body Maintenance Unit','price.f3c':'Infinite Peak Experience Lock','price.btn3':'Start the Dose',
+        'price.note':'Our prices include the Global Mind Ethics Tax. Synapse Credit transactions are irreversible.',
+        'game.overline':'Interactive Test',
+        'game.title':'MetaMind <span>Compatibility Test</span>',
+        'game.sub':'Test the system\'s compatibility with your mind. Increase the dose to initiate the Synapse connection.',
+        'game.lbl':'INITIALIZE DOSE (CONNECTION)','game.warn':'WARNING: REALITY CONSCIOUSNESS MAY SHUT DOWN SUDDENLY. PROCEED WITH CAUTION.',
+        'glitch.l1':'REALITY CONNECTION SEVERED.\nYOUR CONSCIOUSNESS IS LOCKED.','glitch.l2':'WELCOME TO THE SYSTEM.','glitch.b':'YOU ARE 100% COMPATIBLE WITH METAMIND.'
+      }
+    };
+
+    let lang = localStorage.getItem('synapse-lang') || 'tr';
+
+    function applyLang(l) {
+      lang = l;
+      const d = T[l];
+      document.documentElement.lang = l;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const k = el.getAttribute('data-i18n');
+        if (d[k] !== undefined) el.textContent = d[k];
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const k = el.getAttribute('data-i18n-html');
+        if (d[k] !== undefined) el.innerHTML = d[k];
+      });
+      const btn = document.getElementById('langToggle');
+      btn.textContent = l === 'tr' ? 'EN' : 'TR';
+      localStorage.setItem('synapse-lang', l);
+    }
+
+    document.getElementById('langToggle').addEventListener('click', () => {
+      applyLang(lang === 'tr' ? 'en' : 'tr');
+    });
+
+    // ===================== PARTICLES =====================
+    const particlesEl = document.getElementById('particles');
+    for (let i = 0; i < 18; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const size = Math.random() * 80 + 20;
+      p.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;animation-duration:${Math.random()*20+15}s;animation-delay:-${Math.random()*20}s`;
+      particlesEl.appendChild(p);
+    }
+
+    // ===================== SCROLL REVEAL =====================
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          e.target.querySelectorAll('.progress-fill').forEach(b => b.classList.add('animate'));
+        }
+      });
+    }, {threshold: 0.12});
+    revealEls.forEach(el => observer.observe(el));
+
+    document.querySelectorAll('.info-card').forEach(card => {
+      new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.querySelectorAll('.progress-fill').forEach(b => b.classList.add('animate')); });
+      }, {threshold: 0.3}).observe(card);
+    });
+
+    // ===================== NAVBAR =====================
+    const navbar = document.querySelector('nav');
+    function updateNavBg() {
+      const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if (window.scrollY > 60) {
+        navbar.style.background = dark ? 'rgba(13,7,20,.98)' : 'rgba(250,250,250,.96)';
+        navbar.style.boxShadow = dark ? '0 2px 24px rgba(0,0,0,.5)' : '0 2px 24px rgba(77,36,97,.1)';
+      } else {
+        navbar.style.background = dark ? 'rgba(13,7,20,.85)' : 'rgba(250,250,250,.82)';
+        navbar.style.boxShadow = 'none';
+      }
+    }
+    window.addEventListener('scroll', updateNavBg, {passive: true});
+
+    // ===================== DARK MODE =====================
+    const darkBtn = document.getElementById('darkToggle');
+    const root = document.documentElement;
+    if (localStorage.getItem('synapse-theme') === 'dark') {
+      root.setAttribute('data-theme', 'dark');
+      darkBtn.textContent = '☀️';
+    }
+    darkBtn.addEventListener('click', () => {
+      const isDark = root.getAttribute('data-theme') === 'dark';
+      if (isDark) { root.removeAttribute('data-theme'); darkBtn.textContent = '🌙'; localStorage.setItem('synapse-theme','light'); }
+      else { root.setAttribute('data-theme','dark'); darkBtn.textContent = '☀️'; localStorage.setItem('synapse-theme','dark'); }
+      updateNavBg();
+    });
+
+    // ===================== INIT =====================
+    window.addEventListener('load', () => {
+      applyLang(lang);
+      updateNavBg();
+      document.querySelectorAll('#hero .reveal').forEach(el => setTimeout(() => el.classList.add('visible'), 100));
+    });
+
+    // ===================== GAME LOGIC =====================
+    const slider = document.getElementById('doseSlider');
+    const dosePct = document.getElementById('dosePct');
+    const rBack = document.getElementById('roomBack');
+    const rWallL = document.getElementById('roomWallL');
+    const rWallR = document.getElementById('roomWallR');
+    const rFloor = document.getElementById('roomFloor');
+    const rWin = document.getElementById('roomWindow');
+    const rPanes = [document.getElementById('rp1'),document.getElementById('rp2'),document.getElementById('rp3'),document.getElementById('rp4')];
+    const rCrack = document.querySelector('.room-crack');
+    const rOverlay = document.getElementById('roomOverlay');
+    const rBloom = document.getElementById('roomBloom');
+    const dElems = document.getElementById('dreamElems');
+    const hSys = document.getElementById('hudSys');
+    const hLink = document.getElementById('hudLink');
+    const hChem = document.getElementById('hudChem');
+    const glitchOverlay = document.getElementById('glitchOverlay');
+    const labelClick = document.getElementById('doseLabel');
+    let synth = null, osc = null, gainNode = null;
+    let audioCtxStarted = false;
+
+    // Start AudioCtx dynamically on first interaction to avoid browser block
+    function initAudio() {
+      if(audioCtxStarted) return;
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      synth = new AudioCtx();
+      osc = synth.createOscillator();
+      gainNode = synth.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = 110;
+      gainNode.gain.value = 0;
+      osc.connect(gainNode);
+      gainNode.connect(synth.destination);
+      osc.start();
+      audioCtxStarted = true;
+    }
+
+    slider.addEventListener('input', (e) => {
+      initAudio();
+      const val = parseInt(e.target.value);
+      dosePct.textContent = val + '%';
+      
+      // Interpolate colors based on val 0 -> 100
+      // Normal: grayscale (dark), Full: Purples & Yellows
+      const ratio = val / 100;
+      const r_bg = Math.floor(26 + 51 * ratio);
+      const g_bg = Math.floor(26 + 10 * ratio);
+      const b_bg = Math.floor(26 + 77 * ratio); // #1a1a1a to #4d2461ish
+
+      // CSS transitions make it smooth
+      rBack.style.background = `rgb(${r_bg},${g_bg},${b_bg})`;
+      rWallL.style.background = `rgb(${r_bg-5},${g_bg-3},${b_bg-10})`;
+      rWallR.style.background = `rgb(${r_bg-5},${g_bg-3},${b_bg-10})`;
+      rFloor.style.background = `rgb(${r_bg-10},${g_bg-5},${b_bg-15})`;
+
+      rWin.style.borderColor = `rgb(${42 + 207*ratio}, ${42 + 191*ratio}, ${42 + 3*ratio})`; // Yellow edge
+      rPanes.forEach(p => p.style.background = `rgba(249,233,45,${0.1 + ratio*0.7})`);
+
+      rCrack.style.opacity = 0.35 - (ratio * 0.35); // crack disappears
+      
+      const bloomOp = Math.pow(ratio, 1.5);
+      rBloom.style.opacity = bloomOp;
+      rOverlay.style.background = `rgba(77,36,97,${ratio*0.6})`;
+      rOverlay.style.opacity = 1;
+      
+      dElems.style.opacity = bloomOp;
+      dElems.style.filter = `blur(${(1-ratio)*15}px)`;
+
+      // Audio frequency & volume goes up
+      if(audioCtxStarted && synth.state === 'running'){
+        osc.frequency.setTargetAtTime(110 + (220 * ratio), synth.currentTime, 0.1); 
+        gainNode.gain.setTargetAtTime(ratio * 0.15, synth.currentTime, 0.1);
+      }
+
+      // HUD updates
+      if (val < 30) {
+        hSys.textContent = 'UNSTABLE'; hSys.style.color = '#aaa';
+        hChem.textContent = 'DEPLETED'; hChem.style.color = '#aaa';
+      } else if (val < 70) {
+        hSys.textContent = 'CONNECTING...'; hSys.style.color = 'var(--yellow)';
+        hChem.textContent = 'RISING'; hChem.style.color = 'var(--yellow)';
+      } else {
+        hSys.textContent = 'LOCKED'; hSys.style.color = '#0f0';
+        hChem.textContent = 'OXYTOCIN/DOPAMINE PEAK'; hChem.style.color = '#0f0';
+      }
+      hLink.textContent = val + '.0%';
+      hLink.style.color = val > 80 ? '#0f0' : (val > 40 ? 'var(--yellow)' : '#aaa');
+
+      if (val === 100) {
+        executeGlitch();
+      }
+    });
+
+    labelClick.addEventListener('click', () => {
+      // Just a small helper to test audio init if someone clicks the text
+      initAudio();
+    });
+
+    function executeGlitch() {
+      if(audioCtxStarted) {
+        // Harsh noise
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(800, synth.currentTime);
+        gainNode.gain.setValueAtTime(0.4, synth.currentTime);
+        setTimeout(() => { gainNode.gain.value = 0; }, 400);
+      }
+      
+      glitchOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+
+      setTimeout(() => {
+        glitchOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+        slider.value = 0;
+        slider.dispatchEvent(new Event('input')); // reset visual
+        // Redirect to pricing Smoothly
+        document.getElementById('pricing').scrollIntoView({behavior: 'smooth'});
+      }, 3000); // Glitch shows for 3 seconds
+    }
+  </script>
+</body>
+</html>
