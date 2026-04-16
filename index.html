@@ -211,6 +211,8 @@
     .price-card.featured{border-color:var(--purple);box-shadow:0 16px 64px rgba(77,36,97,.15)}
     [data-theme="dark"] .price-card{background:#1E1130;border-color:rgba(77,36,97,.25)}
     [data-theme="dark"] .price-card.featured{box-shadow:0 16px 64px rgba(77,36,97,.25)}
+    [data-theme="dark"] .price-currency,[data-theme="dark"] .price-amount,[data-theme="dark"] .price-features li::before{color:#c9bfda}
+    [data-theme="dark"] .price-badge.b-basic{background:rgba(201,191,218,.1);color:#c9bfda}
     .price-badge{display:inline-block;font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:.3rem .8rem;border-radius:100px;margin-bottom:1.2rem}
     .price-badge.b-basic{background:rgba(77,36,97,.1);color:var(--purple)}
     .price-badge.b-premium{background:var(--purple);color:var(--yellow)}
@@ -226,6 +228,8 @@
     .price-btn{width:100%;padding:1rem;border-radius:100px;font-family:var(--font);font-size:.88rem;font-weight:700;letter-spacing:.04em;cursor:pointer;border:none;transition:all .4s cubic-bezier(.22,1,.36,1);text-align:center}
     .price-btn.btn-basic{background:rgba(77,36,97,.1);color:var(--purple)}
     .price-btn.btn-basic:hover{background:var(--purple);color:var(--yellow)}
+    [data-theme="dark"] .price-btn.btn-basic{background:rgba(201,191,218,.1);color:#c9bfda}
+    [data-theme="dark"] .price-btn.btn-basic:hover{background:#c9bfda;color:#1E1130}
     .price-btn.btn-premium{background:var(--purple);color:var(--yellow);box-shadow:0 8px 32px rgba(77,36,97,.3)}
     .price-btn.btn-premium:hover{background:var(--purple-light);transform:translateY(-2px);box-shadow:0 16px 48px rgba(77,36,97,.4)}
     .price-btn.btn-lifetime{background:var(--yellow);color:var(--purple);box-shadow:0 8px 32px rgba(249,233,45,.25)}
@@ -233,12 +237,17 @@
     .price-note{margin-top:2.5rem;font-size:.72rem;color:var(--gray);opacity:.55;text-align:center;font-style:italic}
 
     /* ===== GAME ===== */
-    #game{background:#0D0714;padding:120px 6vw}
+    #game{background:var(--white);padding:120px 6vw}
+    [data-theme="dark"] #game{background:#0D0714}
     .game-header{text-align:center;max-width:640px;margin:0 auto 4rem}
-    .game-header .section-title{color:#fff}
-    .game-header .section-sub{color:rgba(255,255,255,.5);margin:0 auto}
-    .game-header .section-overline{color:var(--yellow);opacity:1}
-    .game-arena{max-width:840px;margin:0 auto;border-radius:24px;overflow:hidden;box-shadow:0 32px 96px rgba(0,0,0,.5)}
+    .game-header .section-title{color:var(--dark)}
+    [data-theme="dark"] .game-header .section-title{color:#fff}
+    .game-header .section-sub{color:var(--gray);margin:0 auto}
+    [data-theme="dark"] .game-header .section-sub{color:rgba(255,255,255,.5)}
+    .game-header .section-overline{color:var(--purple);opacity:.6}
+    [data-theme="dark"] .game-header .section-overline{color:var(--yellow);opacity:1}
+    .game-arena{max-width:840px;margin:0 auto;border-radius:24px;overflow:hidden;box-shadow:0 32px 96px rgba(77,36,97,.18)}
+    [data-theme="dark"] .game-arena{box-shadow:0 32px 96px rgba(0,0,0,.5)}
     .room-scene{width:100%;aspect-ratio:16/9;position:relative;background:#1a1a1a;overflow:hidden}
     .room-back{position:absolute;inset:0;background:#1a1a1a;transition:background 1.2s ease}
     .room-wall-l{position:absolute;left:0;top:0;bottom:0;width:18%;background:#141414;clip-path:polygon(0 0,100% 15%,100% 85%,0 100%);transition:background 1.2s}
@@ -254,14 +263,20 @@
     .dream-elems{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:1.5rem;font-size:2.5rem;opacity:0;filter:blur(8px);transition:opacity 2s,filter 2s;pointer-events:none}
     .room-hud{position:absolute;top:12px;left:14px;display:flex;flex-direction:column;gap:4px}
     .room-hud-line{font-size:.55rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.25);font-family:monospace;transition:color 1.2s}
-    .game-controls{background:rgba(0,0,0,.55);backdrop-filter:blur(16px);padding:1.8rem 2rem;display:flex;flex-direction:column;align-items:center;gap:.9rem}
+    .game-controls{background:var(--white);backdrop-filter:blur(16px);padding:1.8rem 2rem;display:flex;flex-direction:column;align-items:center;gap:.9rem;border-top:1px solid rgba(77,36,97,.06)}
+    [data-theme="dark"] .game-controls{background:rgba(0,0,0,.55);border-top:none}
     .dose-row{display:flex;align-items:center;gap:1.2rem;width:100%}
-    .dose-lbl{font-size:.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.45);white-space:nowrap}
-    .dose-slider{flex:1;-webkit-appearance:none;appearance:none;height:6px;border-radius:100px;background:rgba(255,255,255,.12);outline:none;cursor:pointer;transition:background .3s}
-    .dose-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;background:var(--yellow);cursor:pointer;box-shadow:0 0 14px rgba(249,233,45,.55);transition:transform .2s}
+    .dose-lbl{font-size:.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);white-space:nowrap}
+    [data-theme="dark"] .dose-lbl{color:rgba(255,255,255,.45)}
+    .dose-slider{flex:1;-webkit-appearance:none;appearance:none;height:6px;border-radius:100px;background:rgba(77,36,97,.12);outline:none;cursor:pointer;transition:background .3s}
+    [data-theme="dark"] .dose-slider{background:rgba(255,255,255,.12)}
+    .dose-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;background:var(--purple);cursor:pointer;box-shadow:0 0 14px rgba(77,36,97,.3);transition:transform .2s}
     .dose-slider::-webkit-slider-thumb:hover{transform:scale(1.25)}
-    .dose-pct{font-size:1.5rem;font-weight:800;color:var(--yellow);min-width:64px;text-align:right;font-variant-numeric:tabular-nums;transition:color .3s}
-    .dose-warn{font-size:.68rem;color:rgba(255,255,255,.25);letter-spacing:.08em;text-align:center}
+    [data-theme="dark"] .dose-slider::-webkit-slider-thumb{background:var(--yellow);box-shadow:0 0 14px rgba(249,233,45,.55)}
+    .dose-pct{font-size:1.5rem;font-weight:800;color:var(--purple);min-width:64px;text-align:right;font-variant-numeric:tabular-nums;transition:color .3s}
+    [data-theme="dark"] .dose-pct{color:var(--yellow)}
+    .dose-warn{font-size:.68rem;color:var(--gray);letter-spacing:.08em;text-align:center}
+    [data-theme="dark"] .dose-warn{color:rgba(255,255,255,.25)}
 
     /* ===== GLITCH OVERLAY ===== */
     .glitch-overlay{position:fixed;inset:0;z-index:9998;display:none;flex-direction:column;align-items:center;justify-content:center;background:#000}
