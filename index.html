@@ -849,19 +849,29 @@
 
     // Start AudioCtx dynamically on first interaction to avoid browser block
     function initAudio() {
-      if(audioCtxStarted) return;
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      synth = new AudioCtx();
-      osc = synth.createOscillator();
-      gainNode = synth.createGain();
-      osc.type = 'sine';
-      osc.frequency.value = 110;
-      gainNode.gain.value = 0;
-      osc.connect(gainNode);
-      gainNode.connect(synth.destination);
-      osc.start();
+      if(!synth) {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if(AudioCtx) {
+          synth = new AudioCtx();
+          osc = synth.createOscillator();
+          gainNode = synth.createGain();
+          osc.type = 'sine';
+          osc.frequency.value = 110;
+          gainNode.gain.value = 0;
+          osc.connect(gainNode);
+          gainNode.connect(synth.destination);
+          osc.start();
+        }
+      }
+      if (synth && synth.state === 'suspended') {
+        synth.resume();
+      }
       audioCtxStarted = true;
     }
+
+    ['touchstart', 'mousedown'].forEach(evt => {
+      slider.addEventListener(evt, initAudio, { passive: true });
+    });
 
     slider.addEventListener('input', (e) => {
       initAudio();
@@ -895,7 +905,8 @@
       dElems.style.filter = `blur(${(1-ratio)*15}px)`;
 
       // Audio frequency & volume goes up
-      if(audioCtxStarted && synth.state === 'running'){
+      if(synth){
+        if(synth.state === 'suspended') synth.resume();
         osc.frequency.setTargetAtTime(110 + (220 * ratio), synth.currentTime, 0.1); 
         gainNode.gain.setTargetAtTime(ratio * 0.15, synth.currentTime, 0.1);
       }
@@ -925,7 +936,8 @@
     });
 
     function executeGlitch() {
-      if(audioCtxStarted) {
+      if(synth) {
+        if(synth.state === 'suspended') synth.resume();
         // Harsh noise
         osc.type = 'sawtooth';
         osc.frequency.setValueAtTime(800, synth.currentTime);
