@@ -288,6 +288,17 @@
     @keyframes glitchBg{0%{background:#000}15%{background:#0d0005;transform:translate(2px,0)}30%{background:#00050d;transform:translate(-2px,1px) skewX(.5deg)}50%{background:#050d00;transform:translate(1px,-1px)}70%{background:#0d0005;transform:translate(-1px,2px)}100%{background:#000;transform:none}}
     @keyframes gShift{0%{text-shadow:3px 0 #f00,-3px 0 #0ff}25%{text-shadow:-3px 0 #f00,3px 0 #0ff,0 2px #ff0}50%{text-shadow:2px 0 #0ff,-2px 0 #f00}75%{text-shadow:-2px 2px #ff0,2px -2px #0ff}100%{text-shadow:3px 0 #f00,-3px 0 #0ff}}
     @keyframes flicker{0%,100%{opacity:1}48%{opacity:1}50%{opacity:0}52%{opacity:1}}
+
+    /* ===== CUSTOM MODAL ===== */
+    .custom-modal{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);opacity:0;transition:opacity .4s ease}
+    .custom-modal.active{display:flex;opacity:1}
+    .modal-content{background:#130D1E;border:1px solid rgba(77,36,97,.4);border-radius:24px;padding:2.5rem 2rem;max-width:380px;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,.8);transform:scale(.95);transition:transform .4s cubic-bezier(.22,1,.36,1);margin:0 1.5rem}
+    .custom-modal.active .modal-content{transform:scale(1)}
+    .modal-content h3{color:var(--yellow);font-size:1.05rem;letter-spacing:.15em;text-transform:uppercase;margin-bottom:1.2rem;font-weight:800}
+    .modal-content p{color:#F0ECF6;font-size:1.15rem;font-weight:600;line-height:1.5;margin-bottom:.8rem}
+    .modal-sub{font-size:.85rem !important;color:#c9bfda !important;font-weight:400 !important;font-style:italic;line-height:1.6 !important}
+    .modal-close{margin-top:2rem;background:var(--purple);color:var(--yellow);border:none;padding:.8rem 2.2rem;border-radius:100px;font-family:var(--font);font-size:.85rem;font-weight:700;letter-spacing:.1em;cursor:pointer;transition:all .3s;box-shadow:0 8px 24px rgba(77,36,97,.3)}
+    .modal-close:hover{background:var(--purple-light);transform:translateY(-2px);box-shadow:0 12px 32px rgba(77,36,97,.5)}
   </style>
 </head>
 <body>
@@ -977,12 +988,30 @@
     }
 
     // Pricing Buttons Easter Egg
+    const simModal = document.getElementById('simModal');
+    const simModalClose = document.getElementById('simModalClose');
+    
+    simModalClose.addEventListener('click', () => {
+      simModal.classList.remove('active');
+      setTimeout(() => { simModal.style.display = 'none'; }, 400);
+    });
+
     document.querySelectorAll('.price-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
-        alert("Abartma... Bu sadece bir simülasyon! 😅🤖\n\n(Gerçekten beynine çip takacağımızı falan düşünmedin herhalde?)");
+        simModal.style.display = 'flex';
+        setTimeout(() => simModal.classList.add('active'), 10);
       });
     });
   </script>
+
+  <div class="custom-modal" id="simModal">
+    <div class="modal-content">
+      <h3>Sistem Uyarısı</h3>
+      <p>Abartma... Bu sadece bir simülasyon! 😅</p>
+      <p class="modal-sub">(Gerçekten beyninize çip takacağımızı düşünmediniz herhalde?)</p>
+      <button class="modal-close" id="simModalClose">ANLADIM</button>
+    </div>
+  </div>
 </body>
 </html>
