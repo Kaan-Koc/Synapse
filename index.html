@@ -290,15 +290,22 @@
     @keyframes flicker{0%,100%{opacity:1}48%{opacity:1}50%{opacity:0}52%{opacity:1}}
 
     /* ===== CUSTOM MODAL ===== */
-    .custom-modal{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);opacity:0;transition:opacity .4s ease}
+    .custom-modal{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);opacity:0;transition:opacity .4s ease}
+    [data-theme="dark"] .custom-modal{background:rgba(0,0,0,.7)}
     .custom-modal.active{display:flex;opacity:1}
-    .modal-content{background:#130D1E;border:1px solid rgba(77,36,97,.4);border-radius:24px;padding:2.5rem 2rem;max-width:380px;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,.8);transform:scale(.95);transition:transform .4s cubic-bezier(.22,1,.36,1);margin:0 1.5rem}
+    .modal-content{background:var(--white);border:1px solid rgba(77,36,97,.15);border-radius:24px;padding:2.5rem 2rem;max-width:380px;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,.2);transform:scale(.95);transition:transform .4s cubic-bezier(.22,1,.36,1);margin:0 1.5rem}
+    [data-theme="dark"] .modal-content{background:#130D1E;border-color:rgba(77,36,97,.4);box-shadow:0 24px 64px rgba(0,0,0,.8)}
     .custom-modal.active .modal-content{transform:scale(1)}
-    .modal-content h3{color:var(--yellow);font-size:1.05rem;letter-spacing:.15em;text-transform:uppercase;margin-bottom:1.2rem;font-weight:800}
-    .modal-content p{color:#F0ECF6;font-size:1.15rem;font-weight:600;line-height:1.5;margin-bottom:.8rem}
-    .modal-sub{font-size:.85rem !important;color:#c9bfda !important;font-weight:400 !important;font-style:italic;line-height:1.6 !important}
-    .modal-close{margin-top:2rem;background:var(--purple);color:var(--yellow);border:none;padding:.8rem 2.2rem;border-radius:100px;font-family:var(--font);font-size:.85rem;font-weight:700;letter-spacing:.1em;cursor:pointer;transition:all .3s;box-shadow:0 8px 24px rgba(77,36,97,.3)}
-    .modal-close:hover{background:var(--purple-light);transform:translateY(-2px);box-shadow:0 12px 32px rgba(77,36,97,.5)}
+    .modal-content h3{color:var(--purple);font-size:1.05rem;letter-spacing:.15em;text-transform:uppercase;margin-bottom:1.2rem;font-weight:800}
+    [data-theme="dark"] .modal-content h3{color:var(--yellow)}
+    .modal-content p{color:#1A1A1A;font-size:1.15rem;font-weight:600;line-height:1.5;margin-bottom:.8rem}
+    [data-theme="dark"] .modal-content p{color:#F0ECF6}
+    .modal-sub{font-size:.85rem !important;color:#888 !important;font-weight:400 !important;font-style:italic;line-height:1.6 !important}
+    [data-theme="dark"] .modal-sub{color:#c9bfda !important}
+    .modal-close{margin-top:2rem;background:var(--purple);color:#fff;border:none;padding:.8rem 2.2rem;border-radius:100px;font-family:var(--font);font-size:.85rem;font-weight:700;letter-spacing:.1em;cursor:pointer;transition:all .3s;box-shadow:0 6px 16px rgba(77,36,97,.2);width:100%}
+    [data-theme="dark"] .modal-close{color:var(--yellow);box-shadow:0 8px 24px rgba(77,36,97,.3)}
+    .modal-close:hover{background:var(--purple-light);transform:translateY(-2px);box-shadow:0 10px 24px rgba(77,36,97,.3)}
+    [data-theme="dark"] .modal-close:hover{box-shadow:0 12px 32px rgba(77,36,97,.5)}
   </style>
 </head>
 <body>
@@ -636,10 +643,10 @@
 
   <div class="custom-modal" id="simModal">
     <div class="modal-content">
-      <h3>Sistem Uyarısı</h3>
-      <p>Abartma... Bu sadece bir simülasyon! 😅</p>
-      <p class="modal-sub">(Gerçekten beyninize çip takacağımızı düşünmediniz herhalde?)</p>
-      <button class="modal-close" id="simModalClose">ANLADIM</button>
+      <h3 data-i18n="modal.title">Sistem Uyarısı</h3>
+      <p data-i18n="modal.p1">Abartma... Bu sadece bir simülasyon! 😅</p>
+      <p class="modal-sub" data-i18n="modal.p2">(Gerçekten beyninize çip takacağımızı düşünmediniz herhalde?)</p>
+      <button class="modal-close" id="simModalClose" data-i18n="modal.btn">ANLADIM</button>
     </div>
   </div>
   
@@ -694,7 +701,8 @@
         'game.title':'MetaMind <span>Uyumluluk Testi</span>',
         'game.sub':'Sistemin zihninizle uyumunu test edin. Synapse bağlantısını başlatmak için dozajı artırın.',
         'game.lbl':'DOZAJI ARTIR (BAĞLANTI)','game.warn':'UYARI: GERÇEKLİK BİLİNCİ BİRDEN KAPANABİLİR. DİKKATLİ İLERLEYİN.',
-        'glitch.l1':'GERÇEKLİK BAĞLANTISI KESİLDİ.\nBİLİNCİNİZ KİLİTLENDİ.','glitch.l2':'SİSTEME HOŞ GELDİNİZ.','glitch.b':'METAMIND İLE %100 UYUMLUSUNUZ.'
+        'glitch.l1':'GERÇEKLİK BAĞLANTISI KESİLDİ.\nBİLİNCİNİZ KİLİTLENDİ.','glitch.l2':'SİSTEME HOŞ GELDİNİZ.','glitch.b':'METAMIND İLE %100 UYUMLUSUNUZ.',
+        'modal.title':'Sistem Uyarısı','modal.p1':'Abartma... Bu sadece bir simülasyon! 😅','modal.p2':'(Gerçekten beyninize çip takacağımızı düşünmediniz herhalde?)','modal.btn':'ANLADIM'
       },
       en: {
         'nav.tech':'Technology','nav.programs':'Programs','nav.exp':'Experiences','nav.buy':'Purchase','nav.cta':'Heal Now',
@@ -744,7 +752,8 @@
         'game.title':'MetaMind <span>Compatibility Test</span>',
         'game.sub':'Test the system\'s compatibility with your mind. Increase the dose to initiate the Synapse connection.',
         'game.lbl':'INITIALIZE DOSE (CONNECTION)','game.warn':'WARNING: REALITY CONSCIOUSNESS MAY SHUT DOWN SUDDENLY. PROCEED WITH CAUTION.',
-        'glitch.l1':'REALITY CONNECTION SEVERED.\nYOUR CONSCIOUSNESS IS LOCKED.','glitch.l2':'WELCOME TO THE SYSTEM.','glitch.b':'YOU ARE 100% COMPATIBLE WITH METAMIND.'
+        'glitch.l1':'REALITY CONNECTION SEVERED.\nYOUR CONSCIOUSNESS IS LOCKED.','glitch.l2':'WELCOME TO THE SYSTEM.','glitch.b':'YOU ARE 100% COMPATIBLE WITH METAMIND.',
+        'modal.title':'System Alert','modal.p1':'Don\'t exaggerate... This is just a simulation! 😅','modal.p2':'(Did you really think we would put a chip in your brain?)','modal.btn':'I UNDERSTAND'
       }
     };
 
