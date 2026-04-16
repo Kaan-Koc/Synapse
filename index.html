@@ -847,12 +847,19 @@
     let synth = null, osc = null, gainNode = null;
     let audioCtxStarted = false;
 
-    // Start AudioCtx dynamically on first interaction to avoid browser block
+    // Start AudioCtx dynamically and safely unlock for iOS
     function initAudio() {
       if(!synth) {
         const AudioCtx = window.AudioContext || window.webkitAudioContext;
         if(AudioCtx) {
           synth = new AudioCtx();
+          
+          // iOS Audio Unlock Hack
+          const unlockSource = synth.createBufferSource();
+          unlockSource.buffer = synth.createBuffer(1, 1, 22050);
+          unlockSource.connect(synth.destination);
+          if(unlockSource.start) unlockSource.start(0);
+
           osc = synth.createOscillator();
           gainNode = synth.createGain();
           osc.type = 'sine';
@@ -869,9 +876,15 @@
       audioCtxStarted = true;
     }
 
-    ['touchstart', 'mousedown'].forEach(evt => {
-      slider.addEventListener(evt, initAudio, { passive: true });
-    });
+    const unlockAppAudio = () => {
+      initAudio();
+      document.removeEventListener('touchstart', unlockAppAudio);
+      document.removeEventListener('touchend', unlockAppAudio);
+      document.removeEventListener('click', unlockAppAudio);
+    };
+    document.addEventListener('touchstart', unlockAppAudio, { passive: true });
+    document.addEventListener('touchend', unlockAppAudio, { passive: true });
+    document.addEventListener('click', unlockAppAudio, { passive: true });
 
     slider.addEventListener('input', (e) => {
       initAudio();
