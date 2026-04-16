@@ -854,12 +854,6 @@
         if(AudioCtx) {
           synth = new AudioCtx();
           
-          // iOS Audio Unlock Hack
-          const unlockSource = synth.createBufferSource();
-          unlockSource.buffer = synth.createBuffer(1, 1, 22050);
-          unlockSource.connect(synth.destination);
-          if(unlockSource.start) unlockSource.start(0);
-
           osc = synth.createOscillator();
           gainNode = synth.createGain();
           osc.type = 'sine';
@@ -877,14 +871,20 @@
     }
 
     const unlockAppAudio = () => {
+      // Force iOS to media mode to bypass silent switch and unlock audio Context
+      const silentAudio = new Audio('data:audio/mp3;base64,//OExAAAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
+      silentAudio.play().catch(() => {});
+      
       initAudio();
       document.removeEventListener('touchstart', unlockAppAudio);
-      document.removeEventListener('touchend', unlockAppAudio);
       document.removeEventListener('click', unlockAppAudio);
     };
-    document.addEventListener('touchstart', unlockAppAudio, { passive: true });
-    document.addEventListener('touchend', unlockAppAudio, { passive: true });
-    document.addEventListener('click', unlockAppAudio, { passive: true });
+    
+    document.addEventListener('touchstart', unlockAppAudio);
+    document.addEventListener('click', unlockAppAudio);
+    
+    slider.addEventListener('touchstart', () => { if(synth && synth.state === 'suspended') synth.resume(); });
+    slider.addEventListener('touchend', () => { if(synth && synth.state === 'suspended') synth.resume(); });
 
     slider.addEventListener('input', (e) => {
       initAudio();
