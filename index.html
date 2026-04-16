@@ -975,6 +975,14 @@
         document.getElementById('pricing').scrollIntoView({behavior: 'smooth'});
       }, 3000); // Glitch shows for 3 seconds
     }
+
+    // Pricing Buttons Easter Egg
+    document.querySelectorAll('.price-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        alert("Abartma... Bu sadece bir simülasyon! 😅🤖\n\n(Gerçekten beynine çip takacağımızı falan düşünmedin herhalde?)");
+      });
+    });
   </script>
 </body>
 </html>
