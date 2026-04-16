@@ -878,16 +878,18 @@
       initAudio();
       document.removeEventListener('touchstart', unlockAppAudio);
       document.removeEventListener('click', unlockAppAudio);
+      document.removeEventListener('mousedown', unlockAppAudio);
     };
     
     document.addEventListener('touchstart', unlockAppAudio);
     document.addEventListener('click', unlockAppAudio);
+    document.addEventListener('mousedown', unlockAppAudio);
     
     slider.addEventListener('touchstart', () => { if(synth && synth.state === 'suspended') synth.resume(); });
+    slider.addEventListener('mousedown', () => { if(synth && synth.state === 'suspended') synth.resume(); });
     slider.addEventListener('touchend', () => { if(synth && synth.state === 'suspended') synth.resume(); });
 
     slider.addEventListener('input', (e) => {
-      initAudio();
       const val = parseInt(e.target.value);
       dosePct.textContent = val + '%';
       
@@ -919,9 +921,12 @@
 
       // Audio frequency & volume goes up
       if(synth){
-        if(synth.state === 'suspended') synth.resume();
-        osc.frequency.setTargetAtTime(110 + (220 * ratio), synth.currentTime, 0.1); 
-        gainNode.gain.setTargetAtTime(ratio * 0.15, synth.currentTime, 0.1);
+        osc.type = 'sine';
+        osc.frequency.cancelScheduledValues(synth.currentTime);
+        gainNode.gain.cancelScheduledValues(synth.currentTime);
+        
+        osc.frequency.setTargetAtTime(110 + (220 * ratio), synth.currentTime, 0.05); 
+        gainNode.gain.setTargetAtTime(ratio * 0.15, synth.currentTime, 0.05);
       }
 
       // HUD updates
