@@ -248,50 +248,53 @@
     [data-theme="dark"] .game-header .section-overline{color:var(--yellow);opacity:1}
     .game-arena{max-width:840px;margin:0 auto;border-radius:24px;overflow:hidden;box-shadow:0 32px 96px rgba(77,36,97,.18)}
     [data-theme="dark"] .game-arena{box-shadow:0 32px 96px rgba(0,0,0,.5)}
-    .room-scene{width:100%;aspect-ratio:16/9;position:relative;background:#1a1a1a;overflow:hidden}
-    .room-back{position:absolute;inset:0;background:#1a1a1a;transition:background 1.2s ease}
-    .room-wall-l{position:absolute;left:0;top:0;bottom:0;width:18%;background:#141414;clip-path:polygon(0 0,100% 15%,100% 85%,0 100%);transition:background 1.2s}
-    .room-wall-r{position:absolute;right:0;top:0;bottom:0;width:18%;background:#141414;clip-path:polygon(0 15%,100% 0,100% 100%,0 85%);transition:background 1.2s}
-    .room-floor{position:absolute;bottom:0;left:0;right:0;height:38%;background:#111;clip-path:polygon(0 28%,100% 28%,100% 100%,0 100%);transition:background 1.2s}
-    .room-window{position:absolute;top:10%;left:50%;transform:translateX(-50%);width:20%;aspect-ratio:1/1.2;border:5px solid #2a2a2a;background:#0a0a0a;position:absolute;transition:all 1.4s}
-    .room-win-inner{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:4px;padding:4px}
-    .room-pane{background:#050505;border-radius:2px;transition:background 1.4s}
-    .room-crack{position:absolute;bottom:39%;left:22%;opacity:.35;transition:opacity 1.2s}
-    .room-crack svg{width:48px;height:48px}
-    .room-overlay{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity 1.8s}
-    .room-bloom{position:absolute;inset:0;opacity:0;pointer-events:none;background:radial-gradient(ellipse at center,rgba(249,233,45,.15) 0%,rgba(77,36,97,.25) 50%,transparent 80%);transition:opacity 2s}
-    .dream-elems{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:1.5rem;font-size:2.5rem;opacity:0;filter:blur(8px);transition:opacity 2s,filter 2s;pointer-events:none}
-    .room-hud{position:absolute;top:12px;left:14px;display:flex;flex-direction:column;gap:4px;z-index:10}
-    .room-hud-line{font-size:.55rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.25);font-family:monospace;transition:color 1.2s}
+    .room-scene{width:100%;aspect-ratio:16/9;position:relative;background:#04020A;overflow:hidden;font-family:monospace}
+    .room-back{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%,#0d0520 0%,#04020A 100%);transition:background 1.2s ease}
+    .room-wall-l, .room-wall-r, .room-floor, .room-window, .room-win-inner, .room-pane, .room-crack{display:none !important}
+    
+    /* Grid floor */
+    .cyber-floor{position:absolute;bottom:0;left:0;right:0;height:42%;perspective:600px;pointer-events:none}
+    .cyber-floor-inner{width:100%;height:100%;background-image:linear-gradient(rgba(77,36,97,.35) 1px,transparent 1px),linear-gradient(90deg,rgba(77,36,97,.35) 1px,transparent 1px);background-size:40px 40px;transform:rotateX(60deg);transform-origin:top center;transition:background-image 1s}
+
+    /* Particle dots */
+    .particle-field{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:3}
+    .particle{position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(77,36,97,.5);animation:particleDrift linear infinite}
+    @keyframes particleDrift{0%{transform:translateY(0) scale(1);opacity:0}20%{opacity:1}80%{opacity:.6}100%{transform:translateY(-80px) scale(0);opacity:0}}
+
+    .room-overlay{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity 1.8s;background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(77,36,97,.35) 0%,transparent 70%)}
+    .room-bloom{position:absolute;inset:0;opacity:0;pointer-events:none;background:radial-gradient(ellipse at center,rgba(249,233,45,.12) 0%,rgba(77,36,97,.2) 50%,transparent 80%);transition:opacity 2s}
+    .dream-elems{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:2rem;font-size:1.8rem;opacity:0;filter:blur(8px);transition:opacity 2s,filter 2s;pointer-events:none;z-index:5}
+    .room-hud{position:absolute;top:10px;left:12px;display:flex;flex-direction:column;gap:3px;z-index:4}
+    .room-hud-line{font-size:.42rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(160,120,210,.4);font-family:monospace;transition:color .8s}
 
     /* === FUTURISTIC OVERLAY ELEMENTS === */
     /* Scan ring */
-    .scan-ring-wrap{position:absolute;top:50%;left:50%;transform:translate(-50%,-52%);width:32%;aspect-ratio:1;pointer-events:none;z-index:5}
-    .scan-ring{width:100%;height:100%;border-radius:50%;border:2px solid rgba(77,36,97,.55);box-shadow:0 0 18px rgba(77,36,97,.35),inset 0 0 14px rgba(77,36,97,.12);animation:ringRotate 8s linear infinite;position:relative;transition:border-color .8s,box-shadow .8s,animation-duration .5s}
-    .scan-ring::before{content:'';position:absolute;inset:8%;border-radius:50%;border:1px dashed rgba(77,36,97,.35);animation:ringRotate 5s linear infinite reverse}
-    .scan-ring::after{content:'';position:absolute;inset:18%;border-radius:50%;border:2px solid rgba(77,36,97,.25);box-shadow:0 0 10px rgba(77,36,97,.25);animation:ringRotate 12s linear infinite}
+    .scan-ring-wrap{position:absolute;top:50%;left:50%;transform:translate(-50%,-54%);width:34%;aspect-ratio:1;pointer-events:none;z-index:5}
+    .scan-ring{width:100%;height:100%;border-radius:50%;border:2px solid rgba(77,36,97,.6);box-shadow:0 0 18px rgba(77,36,97,.4),inset 0 0 18px rgba(77,36,97,.15);animation:ringRotate 8s linear infinite;position:relative;transition:border-color 1s,box-shadow 1s}
+    .scan-ring::before{content:'';position:absolute;inset:8%;border-radius:50%;border:1px dashed rgba(77,36,97,.4);animation:ringRotate 5s linear infinite reverse;transition:border-color 1s}
+    .scan-ring::after{content:'';position:absolute;inset:18%;border-radius:50%;border:2px solid rgba(77,36,97,.3);box-shadow:0 0 12px rgba(77,36,97,.3);animation:ringRotate 12s linear infinite;transition:border-color 1s,box-shadow 1s}
     @keyframes ringRotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
     /* Brain SVG */
-    .brain-svg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44%;height:44%;opacity:.3;transition:opacity 1s,filter 1s;filter:drop-shadow(0 0 4px rgba(77,36,97,.4))}
+    .brain-svg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:45%;height:45%;opacity:.35;transition:opacity 1.4s,filter 1.4s;filter:drop-shadow(0 0 4px rgba(77,36,97,.4))}
     /* EKG */
-    .ekg-bar{position:absolute;bottom:2%;left:0;right:0;height:28px;pointer-events:none;overflow:hidden;z-index:6}
+    .ekg-bar{position:absolute;bottom:43%;left:0;right:0;height:32px;pointer-events:none;overflow:hidden;z-index:6}
     .ekg-svg{width:200%;height:100%;animation:ekgScroll 3s linear infinite}
     @keyframes ekgScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
     /* Holo panels */
-    .holo-panel{position:absolute;background:rgba(77,36,97,.07);border:1px solid rgba(77,36,97,.25);border-radius:6px;padding:5px 9px;z-index:7;transition:all .8s;font-family:monospace}
-    .holo-panel-l{top:10%;left:1.5%;width:21%}
-    .holo-panel-r{top:10%;right:1.5%;width:21%}
-    .holo-panel-b{bottom:12%;left:50%;transform:translateX(-50%);width:17%;text-align:center}
-    .holo-label{font-size:.36rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(77,36,97,.65);margin-bottom:2px;display:block}
-    .holo-val{font-size:.52rem;font-weight:700;color:rgba(160,120,210,.85);letter-spacing:.04em;display:block}
-    .holo-bar-track{height:3px;background:rgba(77,36,97,.18);border-radius:100px;margin-top:3px;overflow:hidden}
-    .holo-bar-fill{height:100%;width:0%;background:linear-gradient(90deg,rgba(77,36,97,.8),rgba(160,80,220,1));border-radius:100px;transition:width .3s}
+    .holo-panel{position:absolute;background:rgba(77,36,97,.08);border:1px solid rgba(77,36,97,.3);border-radius:6px;padding:6px 10px;z-index:7;transition:all 1s;font-family:monospace;backdrop-filter:blur(4px)}
+    .holo-panel-l{top:12%;left:2%;width:22%}
+    .holo-panel-r{top:12%;right:2%;width:22%}
+    .holo-panel-b{bottom:44%;left:50%;transform:translateX(-50%);width:18%;text-align:center}
+    .holo-label{font-size:.38rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(77,36,97,.7);margin-bottom:2px;display:block}
+    .holo-val{font-size:.55rem;font-weight:700;color:rgba(160,120,210,.9);letter-spacing:.05em;display:block;font-family:monospace}
+    .holo-bar-track{height:3px;background:rgba(77,36,97,.2);border-radius:100px;margin-top:4px;overflow:hidden}
+    .holo-bar-fill{height:100%;width:0%;background:linear-gradient(90deg,rgba(77,36,97,.8),rgba(160,80,220,1));border-radius:100px;transition:width 0.4s,background 0.4s}
     /* Corner brackets */
-    .corner{position:absolute;width:12px;height:12px;border-color:rgba(77,36,97,.45);border-style:solid;z-index:8;transition:border-color .6s}
-    .corner-tl{top:7px;left:7px;border-width:1.5px 0 0 1.5px}
-    .corner-tr{top:7px;right:7px;border-width:1.5px 1.5px 0 0}
-    .corner-bl{bottom:7px;left:7px;border-width:0 0 1.5px 1.5px}
-    .corner-br{bottom:7px;right:7px;border-width:0 1.5px 1.5px 0}
+    .corner{position:absolute;width:14px;height:14px;border-color:rgba(77,36,97,.5);border-style:solid;z-index:8;transition:border-color .8s}
+    .corner-tl{top:8px;left:8px;border-width:1.5px 0 0 1.5px}
+    .corner-tr{top:8px;right:8px;border-width:1.5px 1.5px 0 0}
+    .corner-bl{bottom:8px;left:8px;border-width:0 0 1.5px 1.5px}
+    .corner-br{bottom:8px;right:8px;border-width:0 1.5px 1.5px 0}
     /* Status dot */
     .status-dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:rgba(160,120,210,.4);margin-right:3px;animation:dotPulse 2s ease-in-out infinite;vertical-align:middle;transition:background .4s}
     @keyframes dotPulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.5)}}
@@ -557,6 +560,11 @@
         <div class="dream-elems" id="dreamElems">
           <span>🌸</span><span>🎠</span><span>🕊️</span>
         </div>
+        <!-- Grid floor for the futuristic lab -->
+        <div class="cyber-floor"><div class="cyber-floor-inner" id="roomFloorInner"></div></div>
+        
+        <!-- Particles container -->
+        <div class="particle-field" id="particleField"></div>
         <!-- Futuristic overlay (purely additive, no JS dependency) -->
         <canvas id="neuronCanvas"></canvas>
         <div class="corner corner-tl"></div>
@@ -1101,6 +1109,8 @@
       const holoPanelB  = document.getElementById('holoPanelB');
       const corners     = document.querySelectorAll('.corner');
       const neuronCanvas = document.getElementById('neuronCanvas');
+      const roomFloorInner = document.getElementById('roomFloorInner');
+      const particleField = document.getElementById('particleField');
 
       // Neuron canvas
       let neuronNodes = [], neuronRatio = 0;
@@ -1111,7 +1121,7 @@
         if (!w || !h) return;
         neuronCanvas.width = w; neuronCanvas.height = h;
         neuronNodes = [];
-        for (let i = 0; i < 20; i++)
+        for (let i = 0; i < 22; i++)
           neuronNodes.push({ x: Math.random()*w, y: Math.random()*h, vx:(Math.random()-.5)*.25, vy:(Math.random()-.5)*.25 });
       }
       function drawNC() {
@@ -1141,6 +1151,24 @@
       initNC(); drawNC();
       window.addEventListener('resize', initNC);
 
+      function spawnParticles(ratio) {
+        if (!particleField) return;
+        const target = Math.floor(ratio * 32);
+        const current = particleField.children.length;
+        for (let i = current; i < target; i++) {
+          const p = document.createElement('div');
+          p.className = 'particle';
+          const r = 77 + Math.floor(ratio * 172);
+          const g = 36 + Math.floor(ratio * 197);
+          const b = 97 + Math.floor(ratio * 100);
+          p.style.cssText = `left:${Math.random()*100}%;top:${40+Math.random()*40}%;animation-duration:${2+Math.random()*3}s;animation-delay:-${Math.random()*3}s;background:rgba(${r},${g},${b},0.7)`;
+          particleField.appendChild(p);
+        }
+        while (particleField.children.length > target) {
+          particleField.lastChild.remove();
+        }
+      }
+
       document.getElementById('doseSlider').addEventListener('input', function(e) {
         const val = parseInt(e.target.value);
         const ratio = val / 100;
@@ -1153,6 +1181,14 @@
         if(brainCore){ brainCore.setAttribute('fill',`rgba(249,233,45,${ratio*0.95})`); brainCore.setAttribute('r',`${4+ratio*9}`); }
         if(ekgLine){ ekgLine.setAttribute('stroke',`rgba(${rc},${gc},${bc},${0.6+ratio*0.4})`); ekgLine.setAttribute('stroke-width',`${1.2+ratio*1.8}`); }
         if(ekgSvg) ekgSvg.style.animationDuration=`${Math.max(0.5,3-ratio*2.5)}s`;
+
+        if (roomFloorInner) {
+          const gridOpacity = 0.35 + ratio * 0.55;
+          const gC = `rgba(${rc},${gc},${bc},${gridOpacity})`;
+          roomFloorInner.style.backgroundImage = `linear-gradient(${gC} 1px,transparent 1px),linear-gradient(90deg,${gC} 1px,transparent 1px)`;
+        }
+
+        spawnParticles(ratio);
 
         if(holoSync) holoSync.textContent=`${(ratio*148.7).toFixed(2)} Hz`;
         if(holoDopa) holoDopa.textContent=`${(ratio*3.6).toFixed(1)} µmol`;
