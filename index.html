@@ -179,6 +179,33 @@
     .video-corner-bl { bottom: -2px; left: -2px; border-width: 0 0 2px 2px; }
     .video-corner-br { bottom: -2px; right: -2px; border-width: 0 2px 2px 0; }
 
+    .video-error-overlay {
+      position: absolute;
+      inset: 5px;
+      background: rgba(13, 7, 20, 0.95);
+      border-radius: 19px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      padding: 2rem;
+      text-align: center;
+      z-index: 10;
+      font-family: var(--font);
+    }
+    .video-error-overlay .error-icon {
+      font-size: 2.2rem;
+      margin-bottom: 0.8rem;
+    }
+    .video-error-overlay .error-msg {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: #c9bfda;
+      line-height: 1.6;
+      max-width: 520px;
+    }
+
     #usecases{background:var(--white)}
     .usecases-header{max-width:580px}
     .cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:4rem}
@@ -534,6 +561,10 @@
         <source src="synapse_metamind_video.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
+      <div id="videoError" class="video-error-overlay" style="display:none;">
+        <span class="error-icon">⚠️</span>
+        <p class="error-msg" id="videoErrorMsg">Video yüklenemedi.</p>
+      </div>
     </div>
   </section>
 
@@ -1299,6 +1330,28 @@
         corners.forEach(c=>c.style.borderColor=`rgba(${rc},${gc},${bc},${0.45+ratio*0.55})`);
         if(statusDot) statusDot.style.background=val<30?'rgba(160,120,210,.4)':val<70?'rgba(249,233,45,.8)':'#0f0';
       });
+    })();
+
+    // Video Error Handling Overlay
+    (function() {
+      const manifestoVideo = document.getElementById('manifestoVideo');
+      const videoError = document.getElementById('videoError');
+      const videoErrorMsg = document.getElementById('videoErrorMsg');
+      if (manifestoVideo && videoError && videoErrorMsg) {
+        manifestoVideo.addEventListener('error', function() {
+          videoError.style.display = 'flex';
+          const err = manifestoVideo.error;
+          let msg = "Video yüklenirken bir hata oluştu.";
+          if (err) {
+            if (err.code === 1) msg = "Video yükleme işlemi durduruldu (MEDIA_ERR_ABORTED).";
+            else if (err.code === 2) msg = "Ağ hatası nedeniyle video yüklenemedi (MEDIA_ERR_NETWORK).";
+            else if (err.code === 3) msg = "Video dosyası bozuk veya tarayıcınızın desteklemediği bir biçimde (MEDIA_ERR_DECODE).";
+            else if (err.code === 4) msg = "Video dosyası bulunamadı veya tarayıcı güvenlik kısıtlamaları (CORS) nedeniyle yüklenemiyor (MEDIA_ERR_SRC_NOT_SUPPORTED).";
+          }
+          msg += "<br/><br/><small style='opacity:0.8;'>Not: Büyük video dosyaları, 'index.html' dosyasına doğrudan çift tıklanıp yerel dosya yoluyla (file://) açıldığında bazı tarayıcıların güvenlik politikaları nedeniyle engellenebilir. Videonun sorunsuz yüklenmesi için sitenin bir yerel web sunucusu (Live Server vb.) üzerinden çalıştırılması önerilir.</small>";
+          videoErrorMsg.innerHTML = msg;
+        });
+      }
     })();
 
     // Pricing Buttons Easter Egg
