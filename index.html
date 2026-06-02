@@ -205,6 +205,30 @@
       line-height: 1.6;
       max-width: 520px;
     }
+    .video-picker-btn {
+      margin-top: 1.2rem;
+      background: var(--purple);
+      color: var(--yellow);
+      border: none;
+      padding: 0.8rem 2.2rem;
+      border-radius: 100px;
+      font-family: var(--font);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(77, 36, 97, 0.35);
+      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .video-picker-btn:hover {
+      background: var(--purple-light);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(77, 36, 97, 0.45);
+    }
+    [data-theme="dark"] .video-picker-btn {
+      box-shadow: 0 8px 24px rgba(77, 36, 97, 0.55);
+    }
 
     #usecases{background:var(--white)}
     .usecases-header{max-width:580px}
@@ -561,8 +585,10 @@
         Your browser does not support the video tag.
       </video>
       <div id="videoError" class="video-error-overlay" style="display:none;">
-        <span class="error-icon">⚠️</span>
-        <p class="error-msg" id="videoErrorMsg">Video yüklenemedi.</p>
+        <span class="error-icon">🎬</span>
+        <p class="error-msg" id="videoErrorMsg">Video tarayıcı güvenlik kısıtlamaları (CORS) veya OneDrive kilidi nedeniyle otomatik yüklenemedi.</p>
+        <button id="videoPickerBtn" class="video-picker-btn">Videoyu Seç ve Oynat</button>
+        <input type="file" id="videoFileInput" accept="video/*" style="display:none;">
       </div>
     </div>
   </section>
@@ -1331,23 +1357,38 @@
       });
     })();
 
-    // Video Error Handling Overlay
+    // Video Error Handling Overlay & Local File Picker
     (function() {
       const manifestoVideo = document.getElementById('manifestoVideo');
       const videoError = document.getElementById('videoError');
       const videoErrorMsg = document.getElementById('videoErrorMsg');
-      if (manifestoVideo && videoError && videoErrorMsg) {
+      const videoPickerBtn = document.getElementById('videoPickerBtn');
+      const videoFileInput = document.getElementById('videoFileInput');
+
+      if (manifestoVideo && videoError && videoErrorMsg && videoPickerBtn && videoFileInput) {
+        // Show selection trigger
+        videoPickerBtn.addEventListener('click', () => {
+          videoFileInput.click();
+        });
+
+        // Load local file dynamically bypassing CORS/file security restrictions
+        videoFileInput.addEventListener('change', function(e) {
+          const file = e.target.files[0];
+          if (file) {
+            const blobUrl = URL.createObjectURL(file);
+            manifestoVideo.src = blobUrl;
+            videoError.style.display = 'none';
+            manifestoVideo.play().catch(err => {
+              console.error("Play failed:", err);
+            });
+          }
+        });
+
+        // Trigger error handler on loading failure
         manifestoVideo.addEventListener('error', function() {
           videoError.style.display = 'flex';
-          const err = manifestoVideo.error;
-          let msg = "Video yüklenirken bir hata oluştu.";
-          if (err) {
-            if (err.code === 1) msg = "Video yükleme işlemi durduruldu (MEDIA_ERR_ABORTED).";
-            else if (err.code === 2) msg = "Ağ hatası nedeniyle video yüklenemedi (MEDIA_ERR_NETWORK).";
-            else if (err.code === 3) msg = "Video dosyası bozuk veya tarayıcınızın desteklemediği bir biçimde (MEDIA_ERR_DECODE).";
-            else if (err.code === 4) msg = "Video dosyası bulunamadı veya tarayıcı güvenlik kısıtlamaları (CORS) nedeniyle yüklenemiyor (MEDIA_ERR_SRC_NOT_SUPPORTED).";
-          }
-          msg += "<br/><br/><small style='opacity:0.8;'>Not: Büyük video dosyaları, 'index.html' dosyasına doğrudan çift tıklanıp yerel dosya yoluyla (file://) açıldığında bazı tarayıcıların güvenlik politikaları nedeniyle engellenebilir. Videonun sorunsuz yüklenmesi için sitenin bir yerel web sunucusu (Live Server vb.) üzerinden çalıştırılması önerilir.</small>";
+          let msg = "Tarayıcı güvenlik kısıtlamaları (CORS) veya OneDrive dosya kilidi nedeniyle videoya doğrudan erişilemedi.";
+          msg += "<br/><br/><span style='font-size:0.78rem; opacity:0.8;'>Lütfen aşağıdaki butona tıklayıp Masaüstünüzdeki <strong>'Synapse MetaMind Video.mp4'</strong> dosyasını seçin. Güvenlik engelini aşarak anında oynatılacaktır.</span>";
           videoErrorMsg.innerHTML = msg;
         });
       }
