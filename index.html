@@ -609,6 +609,9 @@
           <span class="holo-val" id="holoPort">STANDBY</span>
         </div>
 
+        <!-- Neuron network canvas -->
+        <canvas id="neuronCanvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2"></canvas>
+
         <!-- Glow layers -->
         <div class="room-overlay" id="roomOverlay"></div>
         <div class="room-bloom" id="roomBloom"></div>
@@ -1020,148 +1023,244 @@
     slider.addEventListener('mousedown', () => { if(synth && synth.state === 'suspended') synth.resume(); });
     slider.addEventListener('touchend', () => { if(synth && synth.state === 'suspended') synth.resume(); });
 
+    // ---- DEFINE HELPERS BEFORE LISTENER ----
+
+    // Spawn / trim neural particles
+    function spawnParticles(ratio) {
+      const target = Math.floor(ratio * 32);
+      const current = particleField ? particleField.children.length : 0;
+      if (!particleField) return;
+      for (let i = current; i < target; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        const r = 77 + Math.floor(ratio * 172);
+        const g = 36 + Math.floor(ratio * 197);
+        const b = 97 + Math.floor(ratio * 100);
+        p.style.cssText = `left:${Math.random()*100}%;top:${40+Math.random()*40}%;animation-duration:${2+Math.random()*3}s;animation-delay:-${Math.random()*3}s;background:rgba(${r},${g},${b},0.7)`;
+        particleField.appendChild(p);
+      }
+      while (particleField.children.length > target) {
+        particleField.lastChild.remove();
+      }
+    }
+
+    // Draw animated neuron network on canvas
+    const canvas = document.getElementById('neuronCanvas');
+    let neuronNodes = [];
+    let neuronRatio = 0;
+    let animFrame = null;
+
+    function initNeuronCanvas() {
+      if (!canvas) return;
+      const w = canvas.offsetWidth, h = canvas.offsetHeight;
+      canvas.width = w; canvas.height = h;
+      neuronNodes = [];
+      for (let i = 0; i < 22; i++) {
+        neuronNodes.push({
+          x: Math.random() * w, y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3
+        });
+      }
+    }
+
+    function drawNeurons() {
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width, h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+      const r = neuronRatio;
+      const cr = 77 + Math.floor(r * 172);
+      const cg = 36 + Math.floor(r * 197);
+      const cb = 97 + Math.floor(r * 100);
+      const baseAlpha = 0.08 + r * 0.55;
+
+      // Move nodes
+      neuronNodes.forEach(n => {
+        n.x += n.vx * (1 + r * 2);
+        n.y += n.vy * (1 + r * 2);
+        if (n.x < 0 || n.x > w) n.vx *= -1;
+        if (n.y < 0 || n.y > h) n.vy *= -1;
+      });
+
+      // Draw connections
+      for (let i = 0; i < neuronNodes.length; i++) {
+        for (let j = i + 1; j < neuronNodes.length; j++) {
+          const dx = neuronNodes[i].x - neuronNodes[j].x;
+          const dy = neuronNodes[i].y - neuronNodes[j].y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          const maxDist = 80 + r * 80;
+          if (dist < maxDist) {
+            const alpha = baseAlpha * (1 - dist / maxDist);
+            ctx.beginPath();
+            ctx.moveTo(neuronNodes[i].x, neuronNodes[i].y);
+            ctx.lineTo(neuronNodes[j].x, neuronNodes[j].y);
+            ctx.strokeStyle = `rgba(${cr},${cg},${cb},${alpha})`;
+            ctx.lineWidth = 0.8 + r * 1.2;
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Draw nodes
+      neuronNodes.forEach((n, idx) => {
+        const nodeAlpha = 0.3 + r * 0.7;
+        const nodeR = 2 + r * 3;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, nodeR, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${cr},${cg},${cb},${nodeAlpha})`;
+        ctx.fill();
+        // Pulse on some nodes
+        if (r > 0.4 && idx % 5 === 0) {
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, nodeR + 4 + r * 6, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(${cr},${cg},${cb},${nodeAlpha * 0.3})`;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      });
+
+      animFrame = requestAnimationFrame(drawNeurons);
+    }
+
+    // Start neuron animation
+    initNeuronCanvas();
+    drawNeurons();
+    window.addEventListener('resize', () => { initNeuronCanvas(); });
+
+    // ---- SLIDER INPUT ----
+    let glitchFired = false;
+
     slider.addEventListener('input', (e) => {
       const val = parseInt(e.target.value);
       dosePct.textContent = val + '%';
-      
       const ratio = val / 100;
+      neuronRatio = ratio;
 
       // Background deep-space color shift
       const purpleA = Math.floor(ratio * 30);
       rBack.style.background = `radial-gradient(ellipse 80% 60% at 50% 50%, rgb(${13+purpleA},${5+purpleA},${32+purpleA*2}) 0%, #04020A 100%)`;
 
       // Floor grid brightens
-      if(roomFloorInner) {
+      if (roomFloorInner) {
         const gridOpacity = 0.35 + ratio * 0.55;
-        const gridColor = `rgba(${77+Math.floor(ratio*172)},${36+Math.floor(ratio*197)},${97+Math.floor(ratio*148)},${gridOpacity})`;
-        roomFloorInner.style.backgroundImage = `linear-gradient(${gridColor} 1px,transparent 1px),linear-gradient(90deg,${gridColor} 1px,transparent 1px)`;
+        const gC = `rgba(${77+Math.floor(ratio*172)},${36+Math.floor(ratio*197)},${97+Math.floor(ratio*148)},${gridOpacity})`;
+        roomFloorInner.style.backgroundImage = `linear-gradient(${gC} 1px,transparent 1px),linear-gradient(90deg,${gC} 1px,transparent 1px)`;
       }
 
-      // Scan ring glow
-      if(scanRing) {
-        const ringR = 77+Math.floor(ratio*172), ringG = 36+Math.floor(ratio*197), ringB = 97+Math.floor(ratio*100);
-        const glowIntensity = 18 + ratio * 42;
-        scanRing.style.borderColor = `rgba(${ringR},${ringG},${ringB},${0.6+ratio*0.4})`;
-        scanRing.style.boxShadow = `0 0 ${glowIntensity}px rgba(${ringR},${ringG},${ringB},${0.4+ratio*0.5}),inset 0 0 ${glowIntensity}px rgba(${ringR},${ringG},${ringB},0.15)`;
-        scanRing.style.animationDuration = `${8 - ratio*6}s`;
+      // Scan ring glow & speed
+      if (scanRing) {
+        const rC = 77+Math.floor(ratio*172), gC2 = 36+Math.floor(ratio*197), bC = 97+Math.floor(ratio*100);
+        const gi = 18 + ratio * 42;
+        scanRing.style.borderColor = `rgba(${rC},${gC2},${bC},${0.6+ratio*0.4})`;
+        scanRing.style.boxShadow = `0 0 ${gi}px rgba(${rC},${gC2},${bC},${0.4+ratio*0.5}),inset 0 0 ${gi}px rgba(${rC},${gC2},${bC},0.15)`;
+        scanRing.style.animationDuration = `${Math.max(0.8, 8 - ratio*7.2)}s`;
       }
 
-      // Brain SVG brightens and core activates
-      if(brainSvg) {
+      // Brain SVG
+      if (brainSvg) {
         brainSvg.style.opacity = 0.35 + ratio * 0.65;
-        brainSvg.style.filter = `drop-shadow(0 0 ${4+ratio*20}px rgba(${77+ratio*172},${36+ratio*197},${97+ratio*100},${0.4+ratio*0.6}))`;
+        brainSvg.style.filter = `drop-shadow(0 0 ${4+ratio*22}px rgba(${77+ratio*172},${36+ratio*197},${97+ratio*100},${0.4+ratio*0.6}))`;
       }
-      if(brainCore) {
-        brainCore.setAttribute('fill', `rgba(249,233,45,${ratio*0.9})`);
-        brainCore.setAttribute('r', `${5 + ratio * 8}`);
+      if (brainCore) {
+        brainCore.setAttribute('fill', `rgba(249,233,45,${ratio*0.95})`);
+        brainCore.setAttribute('r', `${4 + ratio * 9}`);
       }
 
-      // EKG line color and speed
-      if(ekgLine) {
-        const ekgR = 77+Math.floor(ratio*172), ekgG = 36+Math.floor(ratio*197), ekgB = 97;
-        ekgLine.setAttribute('stroke', `rgba(${ekgR},${ekgG},${ekgB},${0.6+ratio*0.4})`);
-        ekgLine.setAttribute('stroke-width', `${1.2 + ratio * 1.5}`);
+      // EKG
+      if (ekgLine) {
+        ekgLine.setAttribute('stroke', `rgba(${77+Math.floor(ratio*172)},${36+Math.floor(ratio*197)},97,${0.6+ratio*0.4})`);
+        ekgLine.setAttribute('stroke-width', `${1.2 + ratio * 1.8}`);
       }
-      if(ekgSvg) ekgSvg.style.animationDuration = `${3 - ratio * 2.2}s`;
+      if (ekgSvg) ekgSvg.style.animationDuration = `${Math.max(0.5, 3 - ratio * 2.5)}s`;
 
-      // Holographic panels update
+      // Holographic panels
       const syncHz = (ratio * 148.7).toFixed(2);
       const dopaVal = (ratio * 3.6).toFixed(1);
       const oxyVal = (ratio * 12.4).toFixed(1);
       const seroVal = (ratio * 8.8).toFixed(1);
-      if(holoSync) holoSync.textContent = `${syncHz} Hz`;
-      if(holoSyncBar) holoSyncBar.style.width = `${ratio*100}%`;
-      if(holoDopa) holoDopa.textContent = `${dopaVal} µmol`;
-      if(holoDopaBar) holoDopaBar.style.width = `${ratio*100}%`;
-      if(holoOxy) holoOxy.textContent = `${oxyVal} ng/mL`;
-      if(holoOxyBar) holoOxyBar.style.width = `${ratio*100}%`;
-      if(holoSero) holoSero.textContent = `${seroVal} µg/L`;
-      if(holoSeroBar) holoSeroBar.style.width = `${ratio*100}%`;
+      if (holoSync) holoSync.textContent = `${syncHz} Hz`;
+      if (holoSyncBar) holoSyncBar.style.width = `${ratio*100}%`;
+      if (holoDopa) holoDopa.textContent = `${dopaVal} µmol`;
+      if (holoDopaBar) holoDopaBar.style.width = `${ratio*100}%`;
+      if (holoOxy) holoOxy.textContent = `${oxyVal} ng/mL`;
+      if (holoOxyBar) holoOxyBar.style.width = `${ratio*100}%`;
+      if (holoSero) holoSero.textContent = `${seroVal} µg/L`;
+      if (holoSeroBar) holoSeroBar.style.width = `${ratio*100}%`;
 
-      // Holo bar fill colors shift purple -> yellow
-      const barBg = `linear-gradient(90deg,rgba(${77+Math.floor(ratio*172)},${36+Math.floor(ratio*197)},${97+Math.floor(ratio*100)},.8),rgba(${77+Math.floor(ratio*172)},${36+Math.floor(ratio*197)},${97+Math.floor(ratio*100)},1))`;
+      const barBg = `linear-gradient(90deg,rgba(${77+Math.floor(ratio*172)},${36+Math.floor(ratio*197)},${97+Math.floor(ratio*100)},.8),rgba(249,${Math.floor(ratio*233)},${Math.floor(ratio*45)},1))`;
       [holoSyncBar,holoDopaBar,holoOxyBar,holoSeroBar].forEach(b => { if(b) b.style.background = barBg; });
 
-      // Holo panels brighten
-      const panelBg = `rgba(${77+Math.floor(ratio*60)},${36+Math.floor(ratio*30)},${97+Math.floor(ratio*40)},${0.08+ratio*0.2})`;
-      const panelBorder = `rgba(${77+Math.floor(ratio*172)},${36+Math.floor(ratio*197)},${97+Math.floor(ratio*100)},${0.3+ratio*0.5})`;
-      [holoPanelL,holoPanelR,holoPanelB].forEach(p => {
-        if(p){ p.style.background = panelBg; p.style.borderColor = panelBorder; }
-      });
+      const panelBg = `rgba(${77+Math.floor(ratio*50)},${36+Math.floor(ratio*20)},${97+Math.floor(ratio*30)},${0.08+ratio*0.22})`;
+      const panelBorder = `rgba(${77+Math.floor(ratio*172)},${36+Math.floor(ratio*197)},${97+Math.floor(ratio*100)},${0.3+ratio*0.6})`;
+      [holoPanelL,holoPanelR,holoPanelB].forEach(p => { if(p){ p.style.background=panelBg; p.style.borderColor=panelBorder; }});
+      document.querySelectorAll('.holo-label').forEach(el => el.style.color = `rgba(${77+Math.floor(ratio*172)},${36+Math.floor(ratio*197)},${97+Math.floor(ratio*100)},${0.7+ratio*0.3})`);
+      document.querySelectorAll('.holo-val').forEach(el => el.style.color = `rgba(${160+Math.floor(ratio*89)},${120+Math.floor(ratio*113)},${210+Math.floor(ratio*45)},0.95)`);
 
-      // Holo label & val colors
-      const labelColor = `rgba(${77+Math.floor(ratio*172)},${36+Math.floor(ratio*197)},${97+Math.floor(ratio*100)},${0.7+ratio*0.3})`;
-      const valColor = `rgba(${160+Math.floor(ratio*89)},${120+Math.floor(ratio*113)},${210+Math.floor(ratio*45)},0.95)`;
-      document.querySelectorAll('.holo-label').forEach(el => el.style.color = labelColor);
-      document.querySelectorAll('.holo-val').forEach(el => el.style.color = valColor);
-
-      // Port status
-      if(holoPort) {
-        if(val < 20) holoPort.textContent = 'STANDBY';
-        else if(val < 45) holoPort.textContent = 'SCANNING...';
-        else if(val < 70) holoPort.textContent = 'CONNECTING';
-        else if(val < 95) holoPort.textContent = 'LINKED';
+      if (holoPort) {
+        if (val < 20) holoPort.textContent = 'STANDBY';
+        else if (val < 45) holoPort.textContent = 'SCANNING...';
+        else if (val < 70) holoPort.textContent = 'CONNECTING';
+        else if (val < 90) holoPort.textContent = '● LINKED';
+        else if (val < 100) holoPort.textContent = '▲ WARNING';
         else holoPort.textContent = '█ LOCKED █';
       }
 
-      // Corner brackets glow
       corners.forEach(c => c.style.borderColor = `rgba(${77+Math.floor(ratio*172)},${36+Math.floor(ratio*197)},${97+Math.floor(ratio*100)},${0.5+ratio*0.5})`);
+      if (statusDot) statusDot.style.background = val < 30 ? 'rgba(160,120,210,.4)' : val < 70 ? 'rgba(249,233,45,.8)' : '#0f0';
 
-      // Status dot
-      if(statusDot) statusDot.style.background = val < 30 ? 'rgba(160,120,210,.4)' : val < 70 ? 'rgba(249,233,45,.8)' : '#0f0';
-
-      // Particles
       spawnParticles(ratio);
 
-      // Bloom / overlay
       const bloomOp = Math.pow(ratio, 1.5);
       rBloom.style.opacity = bloomOp;
-      rOverlay.style.opacity = ratio * 0.6;
-      
+      rOverlay.style.opacity = ratio * 0.55;
       dElems.style.opacity = bloomOp;
       dElems.style.filter = `blur(${(1-ratio)*15}px)`;
 
-      // Audio frequency & volume goes up
-      if(synth){
+      // Audio
+      if (synth) {
         osc.type = 'sine';
         osc.frequency.cancelScheduledValues(synth.currentTime);
         gainNode.gain.cancelScheduledValues(synth.currentTime);
-        osc.frequency.setTargetAtTime(110 + (220 * ratio), synth.currentTime, 0.05); 
-        gainNode.gain.setTargetAtTime(ratio * 0.15, synth.currentTime, 0.05);
+        osc.frequency.setTargetAtTime(80 + 300 * ratio, synth.currentTime, 0.05);
+        gainNode.gain.setTargetAtTime(ratio * 0.18, synth.currentTime, 0.05);
       }
 
-      // HUD updates
+      // HUD
       if (val < 30) {
         hSys.textContent = 'STANDBY'; hSys.style.color = 'rgba(160,120,210,.5)';
         hChem.textContent = 'DEPLETED'; hChem.style.color = 'rgba(160,120,210,.5)';
       } else if (val < 70) {
         hSys.textContent = 'CONNECTING...'; hSys.style.color = 'var(--yellow)';
         hChem.textContent = 'RISING'; hChem.style.color = 'var(--yellow)';
-      } else {
-        hSys.textContent = 'LOCKED'; hSys.style.color = '#0f0';
+      } else if (val < 95) {
+        hSys.textContent = 'SYNC ACTIVE'; hSys.style.color = '#0f0';
         hChem.textContent = 'OXY/DOPA PEAK'; hChem.style.color = '#0f0';
+      } else {
+        hSys.textContent = '⚠ OVERRIDE'; hSys.style.color = '#f00';
+        hChem.textContent = 'CRITICAL'; hChem.style.color = '#f00';
       }
       hLink.textContent = val + '.0%';
-      hLink.style.color = val > 80 ? '#0f0' : (val > 40 ? 'var(--yellow)' : 'rgba(160,120,210,.5)');
+      hLink.style.color = val > 94 ? '#f00' : val > 80 ? '#0f0' : (val > 40 ? 'var(--yellow)' : 'rgba(160,120,210,.5)');
 
-      if (val === 100) {
+      if (val === 100 && !glitchFired) {
+        glitchFired = true;
         executeGlitch();
       }
+      if (val < 100) glitchFired = false;
     });
 
-    labelClick.addEventListener('click', () => {
-      // Just a small helper to test audio init if someone clicks the text
-      initAudio();
-    });
+    labelClick.addEventListener('click', () => { initAudio(); });
 
     function executeGlitch() {
-      if(synth) {
-        if(synth.state === 'suspended') synth.resume();
-        // Harsh noise
+      if (synth) {
+        if (synth.state === 'suspended') synth.resume();
         osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(800, synth.currentTime);
+        osc.frequency.cancelScheduledValues(synth.currentTime);
+        gainNode.gain.cancelScheduledValues(synth.currentTime);
+        osc.frequency.setValueAtTime(440, synth.currentTime);
+        osc.frequency.linearRampToValueAtTime(1200, synth.currentTime + 0.3);
         gainNode.gain.setValueAtTime(0.4, synth.currentTime);
-        setTimeout(() => { gainNode.gain.value = 0; }, 400);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, synth.currentTime + 1.5);
       }
       
       glitchOverlay.classList.add('active');
@@ -1171,10 +1270,11 @@
         glitchOverlay.classList.remove('active');
         document.body.style.overflow = '';
         slider.value = 0;
-        slider.dispatchEvent(new Event('input')); // reset visual
-        // Redirect to pricing Smoothly
+        neuronRatio = 0;
+        glitchFired = false;
+        slider.dispatchEvent(new Event('input'));
         document.getElementById('pricing').scrollIntoView({behavior: 'smooth'});
-      }, 3000); // Glitch shows for 3 seconds
+      }, 3000);
     }
 
     // Pricing Buttons Easter Egg
