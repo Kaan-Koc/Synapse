@@ -30,6 +30,7 @@
     [data-theme="dark"] .info-card{background:#1E1130;border-color:rgba(77,36,97,.25);box-shadow:0 4px 24px rgba(0,0,0,.3)}
     [data-theme="dark"] .info-card:hover{box-shadow:0 12px 48px rgba(77,36,97,.25)}
     [data-theme="dark"] .how-step-content h4,[data-theme="dark"] .section-title{color:#F0ECF6}
+    [data-theme="dark"] #manifesto{background:#0D0714}
     [data-theme="dark"] #usecases{background:#0D0714}
     [data-theme="dark"] .use-card{background:#130D1E;border-color:rgba(77,36,97,.2)}
     [data-theme="dark"] .use-card:hover{box-shadow:0 20px 64px rgba(0,0,0,.4)}
@@ -109,6 +110,74 @@
     .progress-track{height:6px;border-radius:100px;background:rgba(77,36,97,.1);overflow:hidden}
     .progress-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--purple) 0%,var(--yellow) 100%);width:0%;transition:width 2s cubic-bezier(.22,1,.36,1)}
     .progress-fill.animate{width:var(--target-width,80%)}
+
+    #manifesto {
+      padding: 120px 6vw;
+      background: var(--white);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .manifesto-header {
+      margin-bottom: 3.5rem;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .video-container {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      aspect-ratio: 16/9;
+      border-radius: 24px;
+      padding: 5px;
+      background: linear-gradient(135deg, rgba(77, 36, 97, 0.25) 0%, rgba(249, 233, 45, 0.15) 100%);
+      box-shadow: 0 32px 80px rgba(77, 36, 97, 0.12);
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.6s;
+    }
+    [data-theme="dark"] .video-container {
+      background: linear-gradient(135deg, rgba(77, 36, 97, 0.45) 0%, rgba(249, 233, 45, 0.2) 100%);
+      box-shadow: 0 32px 96px rgba(0, 0, 0, 0.55), 0 0 30px rgba(77, 36, 97, 0.18);
+    }
+    .video-container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 40px 96px rgba(77, 36, 97, 0.18);
+    }
+    [data-theme="dark"] .video-container:hover {
+      box-shadow: 0 40px 110px rgba(0, 0, 0, 0.65), 0 0 40px rgba(77, 36, 97, 0.25);
+    }
+    .manifesto-video {
+      width: 100%;
+      height: 100%;
+      border-radius: 19px;
+      display: block;
+      object-fit: cover;
+      background: #000;
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+    }
+    /* Corner brackets for video container */
+    .video-corners {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .video-corner {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-color: rgba(77, 36, 97, 0.55);
+      border-style: solid;
+      transition: border-color 0.5s;
+    }
+    [data-theme="dark"] .video-corner {
+      border-color: var(--yellow);
+    }
+    .video-corner-tl { top: -2px; left: -2px; border-width: 2px 0 0 2px; }
+    .video-corner-tr { top: -2px; right: -2px; border-width: 2px 2px 0 0; }
+    .video-corner-bl { bottom: -2px; left: -2px; border-width: 0 0 2px 2px; }
+    .video-corner-br { bottom: -2px; right: -2px; border-width: 0 2px 2px 0; }
 
     #usecases{background:var(--white)}
     .usecases-header{max-width:580px}
@@ -444,6 +513,27 @@
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- MANIFESTO VIDEO SECTION -->
+  <section id="manifesto">
+    <div class="manifesto-header">
+      <span class="section-overline reveal" data-i18n="manifesto.overline"></span>
+      <h2 class="section-title reveal reveal-delay-1" data-i18n-html="manifesto.title"></h2>
+      <p class="section-sub reveal reveal-delay-2" data-i18n="manifesto.sub"></p>
+    </div>
+    <div class="video-container reveal reveal-delay-3">
+      <div class="video-corners">
+        <div class="video-corner video-corner-tl"></div>
+        <div class="video-corner video-corner-tr"></div>
+        <div class="video-corner video-corner-bl"></div>
+        <div class="video-corner video-corner-br"></div>
+      </div>
+      <video id="manifestoVideo" class="manifesto-video" playsinline controls preload="metadata">
+        <source src="synapse_metamind_video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
     </div>
   </section>
 
@@ -784,7 +874,10 @@
         'game.sub':'Sistemin zihninizle uyumunu test edin. Synapse bağlantısını başlatmak için dozajı artırın.',
         'game.lbl':'DOZAJI ARTIR (BAĞLANTI)','game.warn':'UYARI: GERÇEKLİK BİLİNCİ BİRDEN KAPANABİLİR. DİKKATLİ İLERLEYİN.',
         'glitch.l1':'GERÇEKLİK BAĞLANTISI KESİLDİ.\nBİLİNCİNİZ KİLİTLENDİ.','glitch.l2':'SİSTEME HOŞ GELDİNİZ.','glitch.b':'METAMIND İLE %100 UYUMLUSUNUZ.',
-        'modal.title':'Sistem Uyarısı','modal.p1':'Abartma... Bu sadece bir simülasyon! 😅','modal.p2':'(Gerçekten beyninize çip takacağımızı düşünmediniz herhalde?)','modal.btn':'ANLADIM'
+        'modal.title':'Sistem Uyarısı','modal.p1':'Abartma... Bu sadece bir simülasyon! 😅','modal.p2':'(Gerçekten beyninize çip takacağımızı düşünmediniz herhalde?)','modal.btn':'ANLADIM',
+        'manifesto.overline':'Manifesto',
+        'manifesto.title':'Bilinç Akışını <span>Görselleştirin</span>',
+        'manifesto.sub':'MetaMind™ teknolojisinin ardındaki vizyonu ve nöral dönüşüm sürecini kendi gözlerinizle görün.'
       },
       en: {
         'nav.tech':'Technology','nav.programs':'Programs','nav.exp':'Experiences','nav.buy':'Purchase','nav.cta':'Heal Now',
@@ -835,7 +928,10 @@
         'game.sub':'Test the system\'s compatibility with your mind. Increase the dose to initiate the Synapse connection.',
         'game.lbl':'INITIALIZE DOSE (CONNECTION)','game.warn':'WARNING: REALITY CONSCIOUSNESS MAY SHUT DOWN SUDDENLY. PROCEED WITH CAUTION.',
         'glitch.l1':'REALITY CONNECTION SEVERED.\nYOUR CONSCIOUSNESS IS LOCKED.','glitch.l2':'WELCOME TO THE SYSTEM.','glitch.b':'YOU ARE 100% COMPATIBLE WITH METAMIND.',
-        'modal.title':'System Alert','modal.p1':'Don\'t exaggerate... This is just a simulation! 😅','modal.p2':'(Did you really think we would put a chip in your brain?)','modal.btn':'I UNDERSTAND'
+        'modal.title':'System Alert','modal.p1':'Don\'t exaggerate... This is just a simulation! 😅','modal.p2':'(Did you really think we would put a chip in your brain?)','modal.btn':'I UNDERSTAND',
+        'manifesto.overline':'Manifesto',
+        'manifesto.title':'Visualize the <span>Stream of Consciousness</span>',
+        'manifesto.sub':'Witness the vision behind MetaMind™ technology and the neural alignment process for yourself.'
       }
     };
 
